@@ -1,4 +1,8 @@
-.logbox {
+body{
+    background-color: #963399;
+}
+
+.loginbox {
     display: flex;
     margin: auto;
     width: 512px;
@@ -12,15 +16,11 @@
     background: #FFF;
 }
 
-.hder-text {
+.headertext {
     color: #000;
     font-family: "Segoe UI", system-ui, sans-serif;
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
     line-height: 120%; /* 38.4px */
-}
-
-body{
-    background-color: #963399;
 }
