@@ -1,4 +1,32 @@
-body{
-    background-image: url("src/img/backgroungimg.jpg ");
-    background-size: cover;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: #323232;
+    border: none;
+}
+
+
+.lgn-button{
+    display: flex;
+    padding: 10px 26px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 7px;
+    background: #C2C1C1;
+}
+
+.logo_nav{
+    display: flex;
+    align-items: flex-start;
+}
+
+nav{
+    background: #2F1F36;
+    display: flex;
+    padding: 9px 50px;
+    justify-content: space-between;
+    align-items: center;
 }

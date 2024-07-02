@@ -5,15 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href=" {% static 'css/_pages/page-main-cadastro-login.css' %}" type="text/css">
     {% block customStyle %} {% endblock %}
-    <link rel="stylesheet" href="{% static 'css/_pages/page-main-cadastro-login.css' %}" type="text/css">
-
-    
 </head>
-<body>
+<body style="background-image: url('{% static "/img/main/backgroung_login_cadastro.jpg" %}'); ">
+    <nav>
+        <div class="logo_nav">
+            <img src=" {% static "img/main/logo_nav_ipatri.png " %} " alt="logo do site ao topo com um circulo cinza ao redor" width="40" height="40">
+        </div>
+        <div class="lgn-button">Log in</div>
+    </nav>
+    
     <div class="main">
         {% block mainContent %}{% endblock %}
     </div>
+    
+    <footer>
         {% include "partials/footer.html" %}
+    </footer>
 </body>
 </html>
