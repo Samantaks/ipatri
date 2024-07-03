@@ -41,6 +41,7 @@
 
 .lgn-box{
     background-color: white;
+    opacity: 0.92;
     margin: 5% auto;
     display: flex;
     align-items: center;

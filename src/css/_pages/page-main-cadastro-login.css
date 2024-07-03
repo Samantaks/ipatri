@@ -20,6 +20,8 @@ nav a {
 }
 body{
     line-height: 1;
+    background-position: center;
+    background-size: cover;
 }
 
 .lgn-button a{
