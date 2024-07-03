@@ -1,3 +1,6 @@
 /.venv/
 /ipatricore/
 /.idea/
+/src/assets/
+/src/assets/vendor/
+/src/assets/libs/

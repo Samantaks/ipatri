@@ -2,14 +2,38 @@
 {% load static %}
 
 {% block customStyle %} 
+    <link rel="stylesheet" href="{% static 'css/_pages/page-login.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/_pages/page-cadastro.css' %}" type="text/css">
 {% endblock %}
 
 {% block mainContent %}
-    <div class="hdr">
+     <div class="lgn-box" >
+        <div class="hdr">
             <div class="hdr-img">
                 <img src="{% static "img/main/logo_ipatri.png " %}" alt="logo do site" width="75" height="75">
             </div>
-            <div class="hdr-text"> Crie a sua conta</div> 
+            <div class="hdr-text" > Crie a sua conta!</div> 
         </div>
+        <div class="lgn-form">
+             <form action="">
+                 <label for="cpf">CPF:</label>
+                 <br>
+                 <div class="input-wrapper">
+                 <input type="text" id="cpf" name="cpf" placeholder="Digite aqui o seu CPF." autocomplete="off">
+                 <i class="bi bi-person-lock"></i>
+                 </div>
+                 <label for="password">Senha:</label>
+                 <br>
+                 <div class="input-wrapper">
+                 <input type="password" name="password" id="password" placeholder="Digite aqui a sua senha.">
+                 <i class="bi bi-lock"></i>    
+                 </div>
+                 <input type="submit" value="Entre!" class="lgn-botao" >
+             </form>
+            <div class="register-container">
+                <p>Já possui uma conta?</p> 
+                <a href="{% url 'login-page' %}">Acesse-a!</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
