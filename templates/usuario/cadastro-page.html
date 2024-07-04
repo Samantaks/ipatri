@@ -7,15 +7,14 @@
 {% endblock %}
 
 {% block mainContent %}
-
-    <div class="lgn-box">
+    <div class="c-box">
         <div class="hdr">
             <img src="{% static "img/main/logo_ipatri.png " %}" alt="logo do site" width="75" height="75">
             <h2> Crie a sua Conta </h2>
         </div>
-        <div class="lgn-form">
+        
+        <div class="cadastro-form">
              <form action="#">
-                 <div class="box-box">
                      <div class="box">
                          <label for="fname">Primeiro Nome:</label>
                          <input type="text" id="fname" name="fname">
@@ -24,19 +23,17 @@
                          <label for="lname">Sobrenome:</label>
                          <input type="text" id="lname" name="lname">
                      </div>
-                 </div>
                  
-                 <div class="solo-box">
+                 <div class="box">
                      <label for="email">E-mail:</label>
                      <input type="email" id="email" name="email">
                  </div>
                  
-                 <div class="solo-box">
+                 <div class="box">
                      <label for="confirmarEmail">Repita seu E-mail</label>
                      <input type="email" id="confirmarEmail" name="confirmarEmail">
                  </div>
-
-                 <div class="box-box">
+                 
                      <div class="box">
                         <label for="password">Senha:</label>
                         <input type="password" name="password" id="password">
@@ -44,22 +41,22 @@
                      <div class="box">
                         <label for="confirmarSenha">Repita sua Senha:</label>
                         <input type="password" name="confirmarSenha" id="confirmarSenha">
-                     </div> 
-                 </div>
+                     </div>
                  
-                 <div class="box-box">
                      <div class="box">
                          <label for="cpf">Seu CPF:</label>
                          <input type="text" id="cpf" name="cpf">
                      </div>
+                 
                      <div class="box">
                          <label for="orgao">Escolha a sua secretaria:</label>
-                         <input type="radio" id="orgao" name="orgao">
+                             <select name="orgao" id="orgao" >
+                                <option value = "" > Escolha entre as disponiveis </option>
+                                 <option value = "SEPLAN" > Planejamento e Orçamento </option>
+                                <option value = "CC" > Casa Civil </option>
+                             </select>
                      </div>
-                 </div>
-                 
-                 <div class="solo-box">
-                 </div>
+
                  
                  <div class="lgn-botao">
                      <input type="submit" value="Entre!" class="form-botao">
@@ -68,8 +65,8 @@
              </form>
             
             <div class="register-container">
-                <p>Já possui uma conta?</p> 
-                <a href="{% url 'login-page' %}">Acesse-a!</a>
+                <p>Já possui uma conta? <a href="{% url 'login-page' %}">Acesse-a!</a></p> 
+                
             </div>
         </div>
     </div>

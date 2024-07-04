@@ -1,12 +1,32 @@
-.box-box{
-    display: flex;
-    flex-direction: column;
+input, label{
+    display: block;
+    width: 100%;
+    margin: 2%;
 }
 
-.solo-box{
+.c-box{
+    background-color: white;
+    opacity: 0.92;
+    margin: 5% auto;
+    padding: 5% 8%;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+}
 
+.box input{
+    border-style: solid;
+    border-color: #ced4dA;
+    border-radius: 4px;
+    color: #2F1F36;
+    background-color: transparent;
+}
+
+.box input:focus-visible{
+    outline: none;
 }
 
 .box{
-
+    margin: 2%;
+    padding: 8px 12px;
 }
