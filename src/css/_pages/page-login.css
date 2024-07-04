@@ -57,12 +57,12 @@
 }
 
 .form-botao{
+    width: 100%;
+    margin: 5% auto;
+    gap: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: stretch;
-    margin: 5% auto;
-    gap: 8px;
     padding: 12px 24px;
     color: white;
     border-radius: 10px;
@@ -71,8 +71,8 @@
 
 .lgn-botao input{
     border: none;
-
 }
+
 .register-container{
 }
 
