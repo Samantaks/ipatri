@@ -3,71 +3,50 @@
 {% load static %}
 
 {% block customStyle %} 
-    <link rel="stylesheet" href="{% static 'css/_pages/page-login.css' %}" type="text/css">
+
     <link rel="stylesheet" href="{% static 'css/_pages/page-cadastro.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/_pages/page-login.css' %}" type="text/css">
 {% endblock %}
 
 {% block mainContent %}
     <div class="c-box">
         <div class="hdr">
-            <img src="{% static "img/main/logo_ipatri.png " %}" alt="logo do site" width="75" height="75">
+            <img src="{% static "img/main/logo_ipatri.png" %}" alt="logo do site" width="75" height="75">
             <h2> Crie a sua Conta </h2>
         </div>
         
         <div class="cadastro-form">
-             <form action="#">
-                     <div class="box">
-                         <label for="fname">Primeiro Nome:</label>
-                         <input type="text" id="fname" name="fname" placeholder="Seu primeiro nome é...">
-                     </div>
-                     <div class="box">
-                         <label for="lname">Sobrenome:</label>
-                         <input type="text" id="lname" name="lname" placeholder="Seu sobrenome é...">
-                     </div>
+             <form action="." method="post">
+                {% csrf_token %}
+                 {{ form.errors }}
                  
-                 <div class="box">
-                     <label for="email">E-mail:</label>
-                     <input type="email" id="email" name="email" placeholder="Seu e-mail, é...">
+                 <div class="cadastro-wrapper">
+                     {{ form.fname.as_field_group }}
                  </div>
                  
-                 <div class="box">
-                     <label for="confirmarEmail">Repita seu E-mail</label>
-                     <input type="email" id="confirmarEmail" name="confirmarEmail" placeholder="Repetir o seu E-mail aqui...">
+                 <div class="cadastro-wrapper">
+                     {{ form.lname.as_field_group }}
                  </div>
                  
-                     <div class="box">
-                        <label for="password">Senha:</label>
-                        <input type="password" name="password" id="password" placeholder="Digite aqui a sua senha...">
-                     </div>
-                     <div class="box">
-                        <label for="confirmarSenha">Repita sua Senha:</label>
-                        <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Repita aqui a sua senha...">
-                     </div>
+                 <div class="cadastro-wrapper">
+                     {{ form.Email.as_field_group }}
+                 </div>
                  
-                     <div class="box">
-                         <label for="cpf">Seu CPF:</label>
-                         <input type="text" id="cpf" name="cpf" placeholder="Digite aqui o seu CPF.">
-                     </div>
+                 <div class="cadastro-wrapper">
+                     {{ form.ConfEmail.as_field_group }}
+                 </div>
                  
-                     <div class="box">
-                         <label for="orgao">Escolha a sua secretaria:</label>
-                             <select name="orgao" id="orgao" >
-                                <option value = "" > Selecione...  </option>
-                                 <option value = "SEPLAN" > Planejamento e Orçamento </option>
-                                <option value = "CC" > Casa Civil </option>
-                             </select>
-                     </div>
 
-                 
                  <div class="lgn-botao">
                      <input type="submit" value="Entre!" class="form-botao">
                  </div>
                  
+
              </form>
             
             <div class="register-container">
-                <p>Já possui uma conta? <a href="{% url 'login-page' %}">Acesse-a!</a></p> 
-                
+                <p>Já possui uma conta? <a href="{% url 'login-page' %}">Acesse-a!</a></p>
+
             </div>
         </div>
     </div>

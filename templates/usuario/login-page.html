@@ -8,18 +8,29 @@
 {% endblock %}
 
 {% block mainContent %}
-    
     <div class="lgn-box">
         <div class="hdr">
             <img src="{% static "img/main/logo_ipatri.png " %}" alt="logo do site" width="75" height="75">
             <h2> Acesse a sua conta </h2>
         </div>
+        
         <div class="lgn-form">
              <form action="." method="post">
                  {% csrf_token %}
+                 
+                 {{ form.errors }}
+                 
                  <div class="input-wrapper">
-                 <table> {{ form.as_table }} </table>
-                 </div>                   
+                 <table> 
+                     {{ form.cpf.as_field_group }}
+                 </table>
+                 </div>
+                 
+                 <div class="input-wrapper">
+                 <table> 
+                     {{ form.senha.as_field_group }}
+                 </table>
+                 </div>
                  <div class="lgn-botao">
                     <input type="submit" value="Entre!" class="form-botao">
                  </div>

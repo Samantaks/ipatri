@@ -1,36 +1,45 @@
-input, label{
-    display: block;
-    width: 100%;
-}
-
 .c-box{
     background-color: white;
     opacity: 0.92;
     margin: 5% auto;
     padding: 5% 8%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     width: fit-content;
     height: fit-content;
     border-radius: 10px;
 
 }
 
-.box input{
-    border-style: solid;
-    border-color: #ced4dA;
-    border-radius: 4px;
-    color: #2F1F36;
-    background-color: transparent;
-}
-
-.box input:focus-visible{
+.cadastro-wrapper input:focus-visible{
     outline: none;
-}
-
-.box{
-    padding: 2%;
 }
 
 #orgao{
     display: block;
+    width: 100%;
+}
+.c-box label{
+    margin-top: 1%;
+}
+
+
+.cadastro-wrapper{
+    margin: 2%;
+    border-style: solid;
+    border-color: #ced4dA;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+.cadastro-wrapper input{
+    background-color: transparent;
+    color: #2F1F36;
+    border: none;
     width: 100%;
 }

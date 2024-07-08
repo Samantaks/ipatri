@@ -1,4 +1,4 @@
-from usuario.forms import LoginForm
+from usuario.forms import LoginForm, CadastroForm
 from django.shortcuts import render
 
 
@@ -21,4 +21,17 @@ def loginpage(request):
 
 
 def cadastropage(request):
-    return render(request, "usuario/cadastro-page.html")
+    if request.method == "GET":
+        form = CadastroForm
+        context = {
+            'form': form,
+        }
+        return render(request, 'usuario/cadastro-page.html', context=context)
+    else:
+        form = CadastroForm(request.POST)
+        print(form.is_valid())
+        form = CadastroForm(request.POST)
+        context = {
+            'form': form,
+        }
+        return render(request, 'usuario/cadastro-page.html', context=context)
