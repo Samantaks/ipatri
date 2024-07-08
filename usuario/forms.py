@@ -13,7 +13,7 @@ class LoginForm(forms.Form):
 
 
 class CadastroForm(forms.Form):
-    fname = forms.CharField(label="Primeiro Nome:", max_length=200)
+    fname = forms.CharField(label="Nome:", max_length=200)
     lname = forms.CharField(label="Sobrenome:", max_length=200)
     Email = forms.EmailField(label="Email:", max_length=200)
     ConfEmail = forms.CharField(label="Confirme o seu Email:", max_length=200)
