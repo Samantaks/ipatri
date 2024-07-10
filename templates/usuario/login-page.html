@@ -15,7 +15,7 @@
         </div>
         
         <div class="lgn-form">
-             <form action="." method="post">
+             <form action="{% url "login-page" %}" method="post">
                  {% csrf_token %}
                  
                  {{ form.errors }}

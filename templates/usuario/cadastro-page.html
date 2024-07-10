@@ -16,7 +16,7 @@
         </div>
         
         <div class="cadastro-form">
-             <form action="." method="post">
+             <form action="{% url "cadastro-page" %}" method="post">
                 {% csrf_token %}
                  {{ form.errors }}
                  

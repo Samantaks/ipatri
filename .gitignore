@@ -2,5 +2,7 @@
 /ipatricore/
 /.idea/
 /src/assets/libs/
-/src/assets/
-/src/assets/vendor/
+
+
+/src/assets/vendor
+/static
