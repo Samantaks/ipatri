@@ -1,0 +1,12 @@
+{% extends "app/app_main.html" %}
+{% block title %} Home {% endblock %}
+{% load static %}
+
+{% block customStyle %} 
+    <link rel="stylesheet" href="{% static 'css/_pages/app/dashboard.css' %}" type="text/css">
+{% endblock %}
+
+{% block mainContent %}
+    <h1>  Estás na página Dashboard!  </h1>
+{% endblock %}
+
