@@ -20,7 +20,7 @@ class Usuario(models.Model):
     email = models.CharField(max_length=150)
     senha = models.CharField(max_length=50)
     role = models.CharField(max_length=1)
-    cpf = models.IntegerField(db_column='CPF')  # Field name made lowercase.
+    cpf = models.TextField(db_column='CPF')
     setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor')
 
     class Meta:

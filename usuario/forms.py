@@ -1,4 +1,5 @@
 from django import forms
+from .models import Setor
 
 SECRETARIA_CHOICES = (
     ('', 'Escolha entre...'),
