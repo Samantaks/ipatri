@@ -1,8 +1,7 @@
 from usuario.forms import LoginForm, CadastroForm
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .models import Usuario
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 
 def loginpage(request):
@@ -20,26 +19,24 @@ def loginpage(request):
         cpf = request.POST.get('cpf')
         senha = request.POST.get('senha')
 
-# Form Renderizado em cima
+        # Form Renderizado em cima
 
-        validUserDjango = User.objects.filter(username=cpf).first()
-        validSenhaDjango = User.objects.filter(password=senha)
         validSenhaDB = Usuario.objects.filter(senha=senha)
         validUserDB = Usuario.objects.filter(cpf=cpf).first()
+        validarDjango = authenticate(username=cpf, password=senha)
 
-        if validUserDjango:
-            if validSenhaDjango:
-                return HttpResponse(f'Bem vindo {cpf}')
-            else:
-                return HttpResponse('Usuário com a senha errada no loop do Django.')
+        if validarDjango:
+            login(request, validarDjango)
+            return redirect('app-home')
 
         elif validUserDB:
             if validSenhaDB:
-                return HttpResponse(f'Bem vindo {cpf}')
+                return redirect('app-home')
             else:
-                return HttpResponse(f'Usuário com senha errada no loop do DB')
+                return render(request, 'usuario/login-page.html', context=context)
+
         else:
-            return HttpResponse("Usuário inválido.")
+            return render(request, 'usuario/login-page.html', context=context)
 
 
 def cadastropage(request):
@@ -66,6 +63,6 @@ def cadastropage(request):
                                   role=1, cpf=new_cpf)
             new_Usuario.save()
 
-            return redirect('usuario:cadastro')
+            return redirect('cadastro-page')
 
         return render(request, 'usuario/cadastro-page.html', context=context)
