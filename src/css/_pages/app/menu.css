@@ -26,6 +26,14 @@
     align-items: center;
 }
 
+
+.nav{
+    --bs-nav-link-color: #000 ;
+    --bs-nav-link-hover-color: #430262 ;
+    --bs-nav-link-disabled-color:#535353 ;
+}
+
+
 /* Menu Top */
 #menutop{
     font-size: 26px;
@@ -33,16 +41,12 @@
     font-weight: 400;
     line-height: 150%;
     border-radius: 0 2vh 0 0;
-    margin-top: 4.2vh ;
+    padding: 16px 120px;
 }
 
 
 /* Comum dos dois Menu's */
 
-nav{
-
-
-}
 
 
 .btn-outline-secondary{
@@ -50,5 +54,9 @@ nav{
 }
 
 .menus{
+
+}
+
+.btn-outline-secondary {
 
 }
