@@ -8,11 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <!-- Vendor CSS Files -->
+    <link rel="stylesheet" href="{% static "assets/vendor/lineicons/css/icons.css" %}"/>
     <link rel="stylesheet" href="{% static "assets/vendor/bootstrap/css/bootstrap.min.css" %}" type="text/css">
     <link rel="stylesheet" href="{% static "assets/vendor/bootstrap-icons/bootstrap-icons.css" %}" type="text/css">
 
+
   <!-- Main CSS Files -->
     <link rel="stylesheet" href=" {% static 'css/_pages/app/app_main.css' %}" type="text/css">
+    <link rel="stylesheet" href=" {% static 'css/_pages/app/menu.css' %}" type="text/css">
 
     {% block customStyle %} 
         
@@ -20,23 +23,24 @@
 
   <!-- Vendor JS Files -->
     <script src="{% static "assets/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "assets/vendor/jquery/jquery.min.js" %}"></script>
+
+  <!-- Sites JS Files -->
+    {% block customJs %}
+    {% endblock %}
+    <script src="{% static "js/app/app-main.js" %}"></script>
 
 </head>
 <body>
-    <div class="menu_top">
-        {% include "partials/menutop.html" %}
-    </div>
-    
-    <div class="menu_left">
+<div class="wrapper d-flex align-items-stretch" id="main-main">
         {% include "partials/menuleft.html" %}
-    </div>
-    
-    <div class="main">
+        <div class="main-content">
+        {% include "partials/menutop.html" %}
         {% block mainContent %}{% endblock %}
-    </div>
-    
-    <footer>
-        {% include "partials/footer.html" %}
-    </footer>
+        </div>
+</div>
+<footer>
+    SSSSS
+</footer>
 </body>
 </html>

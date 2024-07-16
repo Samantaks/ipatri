@@ -1,5 +1,13 @@
-<aside>
+{% load static %}
 
-
+<nav class="nav flex-column" id="sidebar">
+    <div class="logo">
+        <a class="navbar-brand">
+        <img src="{% static "img/main/logo_ipatri.png" %}" alt="logo da empresa" width="30" height="30">
+        </a>    
+    </div>
     
-</aside>
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="#">Link</a>
+</nav>
