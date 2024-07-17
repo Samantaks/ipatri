@@ -3,15 +3,20 @@
 {% load static %}
 
 {% block customStyle %} 
-    <link rel="stylesheet" href="{% static 'css/_pages/app' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/_pages/app/localizacao.css' %}" type="text/css">
+{% endblock %}
+
+{% block customJs %}
 {% endblock %}
 
 
 {% block mainContent %}
-<div class="container">
     
-    <h1>  Estás na página de Localização de Item!  </h1>
-
-</div>
-
+<div class="inside-box">
+<h1>
+    Estás na página Localização
+</h1>
+</div>    
+   
 {% endblock %}
+

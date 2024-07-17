@@ -44,19 +44,22 @@
     padding: 16px 120px;
 }
 
+.btn-outline-secondary {
+    --bs-btn-hover-bg: #2f1f36 ;
+    --bs-btn-active-color: #2f1f36 ;
+    --bs-btn-active-bg: #FFFFFF
+}
+
+.btn {
+    padding: 13px 26px;
+    color: #2f1f36;
+}
 
 /* Comum dos dois Menu's */
 
 
 
-.btn-outline-secondary{
-
-}
-
 .menus{
 
 }
 
-.btn-outline-secondary {
-
-}
