@@ -1,13 +1,21 @@
 {% load static %}
+<div id="sidebar" class="col-md-3 col-sm-12">
+        <div class="logo">
+          <img src="{% static "img/main/logo_ipatri.png" %}" alt="Logo da Empresa">
+        </div>
 
-<nav class="nav flex-column" id="sidebar">
-    <div class="logo">
-        <a class="navbar-brand">
-        <img src="{% static "img/main/logo_ipatri.png" %}" alt="logo da empresa" width="30" height="30">
-        </a>    
-    </div>
-    
-    <a class="nav-link active" aria-current="page" href="#">Active</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-</nav>
+        <button class="dropdown-toggle btn btn-outline-secondary border-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Item
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">Cadastro</a></li>
+          <li><a class="dropdown-item" href="#">Visita</a></li>
+        </ul>
+
+        <button class="btn btn-outline-secondary border-0">Configuração</button>
+
+        <div class="foto-usuario">
+          <img src="{% static "img/main/usuariofrog.jpg" %}" alt="Foto do Usuário">
+          <span> Nome do Usuario </span>
+        </div>
+</div>
