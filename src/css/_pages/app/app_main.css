@@ -36,20 +36,26 @@ body{
 }
 
 .main-content{
-    padding-right: 2%;
+    width: auto;
 }
 
 #main-main{
     border-radius: 39px 39px 0 0;
     background-color: #D3D3D3;
-    margin: 2%;
+    margin: 2% auto;
+    min-height: 90vh;
+    max-height: fit-content;
+    width: fit-content;
+
+
 }
 
 .inside-box{
     background-color: white;
     border-radius: 16px 0 0 0;
     padding: 5%;
+    min-height: 75vh;
+    max-height: fit-content;
     width: fit-content;
-    height: fit-content;
 }
 

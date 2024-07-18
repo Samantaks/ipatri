@@ -47,8 +47,8 @@
     }
 
     #sidebar .foto-usuario img {
-      width: 50px;
-      height: 50px;
+      width: 5vh;
+      height: 5vh;
       border-radius: 50%;
       margin-right: 10px;
     }
@@ -61,6 +61,7 @@
     justify-content: space-around;
     align-items: center;
     max-height: 100%;
+    margin: 1vh;
 }
 
 /* Menu Top */
@@ -70,7 +71,6 @@
     font-weight: 400;
     line-height: 150%;
     border-radius: 0 2vh 0 0;
-    padding: 16px 120px;
 }
 
 .btn-outline-secondary {
