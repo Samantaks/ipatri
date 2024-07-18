@@ -1,11 +1,10 @@
 from django import forms
-from .models import Setor
 
-SECRETARIA_CHOICES = (
-    ('', 'Escolha entre...'),
-    ('Seplan', 'Secretária de Estado do Planejamento e Orçamento'),
-    ('CC', 'Casa Civil')
-)
+# SECRETARIA_CHOICES = (
+#    ('', 'Escolha entre...'),
+#    ('Seplan', 'Secretária de Estado do Planejamento e Orçamento'),
+#    ('CC', 'Casa Civil')
+# )
 
 
 class LoginForm(forms.Form):
@@ -21,4 +20,4 @@ class CadastroForm(forms.Form):
     cpf = forms.CharField(label="CPF:", max_length=20)
     senha = forms.CharField(label="Senha:", widget=forms.PasswordInput())
     ConfSenha = forms.CharField(label="Confirme sua Senha:", widget=forms.PasswordInput())
-    secretaria = forms.ChoiceField(label="Escolha uma secretaria", choices=SECRETARIA_CHOICES)
+    # secretaria = forms.ChoiceField(label="Escolha uma secretaria", choices=SECRETARIA_CHOICES)

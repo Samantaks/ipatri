@@ -45,7 +45,8 @@ body{
     margin: 2% auto;
     min-height: 90vh;
     max-height: fit-content;
-    width: fit-content;
+    min-width: auto;
+    max-width: fit-content;
 
 
 }
@@ -56,6 +57,7 @@ body{
     padding: 5%;
     min-height: 75vh;
     max-height: fit-content;
-    width: fit-content;
+    min-width: 90%;
+    max-width: fit-content;
 }
 

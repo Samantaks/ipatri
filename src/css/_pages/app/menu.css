@@ -86,7 +86,10 @@
 
 /* Comum dos dois Menu's */
 
+a{
+    text-decoration: none;
 
+}
 
 .menus{
 
