@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario ,Setor
+from .models import Usuario, Setor
 
 # Register your models here.
 admin.site.register(Usuario)
