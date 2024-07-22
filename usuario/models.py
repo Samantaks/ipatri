@@ -8,6 +8,9 @@ class Setor(models.Model):
     setor_full = models.CharField(max_length=250, db_collation='utf8mb3_general_ci')
     orgao_abrev = models.CharField(max_length=250, db_collation='utf8mb3_general_ci')
 
+    def __str__(self):
+        return f"{self.id_setor} - {self.setor_abrev}"
+
     class Meta:
         managed = False
         db_table = 'setor'
@@ -21,7 +24,10 @@ class Usuario(models.Model):
     senha = models.CharField(max_length=50)
     role = models.CharField(max_length=1)
     cpf = models.TextField(db_column='CPF')
-    setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor')
+    setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor',
+                                       verbose_name='Setor', related_name='usuarios')
+
+
 
     class Meta:
         managed = False

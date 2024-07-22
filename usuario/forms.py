@@ -1,4 +1,5 @@
 from django import forms
+from .models import Usuario, Setor
 
 # SECRETARIA_CHOICES = (
 #    ('', 'Escolha entre...'),
@@ -21,3 +22,30 @@ class CadastroForm(forms.Form):
     senha = forms.CharField(label="Senha:", widget=forms.PasswordInput())
     ConfSenha = forms.CharField(label="Confirme sua Senha:", widget=forms.PasswordInput())
     # secretaria = forms.ChoiceField(label="Escolha uma secretaria", choices=SECRETARIA_CHOICES)
+
+
+class UsuarioForm(forms.ModelForm):
+    setor_nome = forms.CharField(max_length=100, required=False, label='Setor',
+                                 widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+    class Meta:
+        model = Usuario
+        fields = ['idusuario', 'nomeusuario', 'sobrenome', 'email', 'senha',
+                  'role', 'cpf', 'setor_id_setor', 'setor_nome']
+
+    def _init_(self, *args, **kwargs):
+        super(UsuarioForm, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['setor_nome'].initial = self.instance.setor_id_setor.setor_abrev
+
+
+class SetorForm(forms.ModelForm):
+
+    class Meta:
+        model = Setor
+        fields = ['id_setor', 'setor_abrev', 'orgao_full', 'setor_full', 'orgao_abrev']
+
+    def _init_(self, *args, **kwargs):
+        super(SetorForm, self).__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['id_setor'].initial = self.instance.setor_id_setor
