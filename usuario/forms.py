@@ -1,12 +1,6 @@
 from django import forms
 from .models import Usuario, Setor
 
-# SECRETARIA_CHOICES = (
-#    ('', 'Escolha entre...'),
-#    ('Seplan', 'Secretária de Estado do Planejamento e Orçamento'),
-#    ('CC', 'Casa Civil')
-# )
-
 
 class LoginForm(forms.Form):
     cpf = forms.CharField(label="CPF:", max_length=20)
@@ -21,7 +15,6 @@ class CadastroForm(forms.Form):
     cpf = forms.CharField(label="CPF:", max_length=20)
     senha = forms.CharField(label="Senha:", widget=forms.PasswordInput())
     ConfSenha = forms.CharField(label="Confirme sua Senha:", widget=forms.PasswordInput())
-    # secretaria = forms.ChoiceField(label="Escolha uma secretaria", choices=SECRETARIA_CHOICES)
 
 
 class UsuarioForm(forms.ModelForm):
@@ -31,7 +24,7 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['idusuario', 'nomeusuario', 'sobrenome', 'email', 'senha',
-                  'role', 'cpf', 'setor_id_setor', 'setor_nome']
+                  'cpf', 'setor_id_setor', 'setor_nome']
 
     def _init_(self, *args, **kwargs):
         super(UsuarioForm, self).__init__(*args, **kwargs)

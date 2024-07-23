@@ -1,17 +1,15 @@
 from usuario.forms import LoginForm, CadastroForm
 from django.shortcuts import render, redirect
-from .models import Usuario
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.models import User
+from .models import Usuario
+from django.contrib import auth
+from django.http import HttpResponseNotFound
 
 
 def loginpage(request):
-    if request.method == "GET":
-        form = LoginForm
-        context = {
-            'form': form,
-        }
-        return render(request, 'usuario/login-page.html', context=context)
-    else:
+    if request.method == "POST":
         form = LoginForm(request.POST)
         context = {
             'form': form,
@@ -19,24 +17,23 @@ def loginpage(request):
         cpf = request.POST.get('cpf')
         senha = request.POST.get('senha')
 
-        # Form Renderizado em cima
+        try:
+            usuario = Usuario.objects.get(cpf=cpf)
+        except Usuario.DoesNotExist:
+            messages.error(request, 'Usuário não encontrado.')
+            return render(request, 'usuario/login-page.html', {'form': form})
 
-        validSenhaDB = Usuario.objects.filter(senha=senha)
-        validUserDB = Usuario.objects.filter(cpf=cpf).first()
-        validarDjango = authenticate(username=cpf, password=senha)
-
-        if validarDjango:
-            login(request, validarDjango)
-            return redirect('app-home')
-
-        elif validUserDB:
-            if validSenhaDB:
-                return redirect('app-home')
-            else:
-                return render(request, 'usuario/login-page.html', context=context)
-
+            # Verifique a senha
+        if usuario.senha == senha:
+            # Se a senha estiver correta, faça o login do usuário
+            login(request, usuario)
+            return render(request, 'app/dashboard.html')  # Redirecione para a página inicial ou outra página desejada
         else:
-            return render(request, 'usuario/login-page.html', context=context)
+            messages.error(request, 'Senha incorreta.')
+    else:
+        form = LoginForm()
+
+    return render(request, 'usuario/login-page.html', {'form': form})
 
 
 def cadastropage(request):

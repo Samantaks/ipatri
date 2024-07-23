@@ -28,14 +28,15 @@ class Depreciacao(models.Model):
 # Create your models here.
 class Item(models.Model):
     idpatrimonio = models.AutoField(primary_key=True)
-    tombo = models.IntegerField()
-    marca = models.CharField(max_length=250)
+    tombo = models.IntegerField(blank=True, null=True)
+    marca = models.CharField(max_length=50, blank=True, null=True)
     descricao = models.TextField(blank=True, null=True)
-    datacompra = models.DateField()
-    valorcompra = models.DecimalField(max_digits=20, decimal_places=5)
-    notafiscal = models.IntegerField()
-    itemnome = models.CharField(max_length=200)
-    itemano = models.IntegerField()
+    datacompra = models.DateField(blank=True, null=True)
+    valorcompra = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
+    notafiscal = models.IntegerField(blank=True, null=True)
+    itemnome = models.CharField(max_length=200, blank=True, null=True)
+    itemano = models.IntegerField(blank=True, null=True)
+
     depreciacao_iddepreciacao1 = models.ForeignKey(Depreciacao,
                                                    models.DO_NOTHING, db_column='depreciacao_iddepreciacao1')
     setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor')

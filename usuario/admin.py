@@ -1,12 +1,12 @@
 from django.contrib import admin
 from .models import Usuario, Setor
-from .forms import UsuarioForm, SetorForm
+# from .forms import UsuarioForm, SetorForm
 
 
 class UsuarioAdmin(admin.ModelAdmin):
-    form = UsuarioForm
+   # form = UsuarioForm
     list_display = ('idusuario', 'nomeusuario', 'sobrenome',
-                    'email', 'role', 'cpf', 'get_setor_nome')
+                    'email', 'cpf', 'get_setor_nome')
 
     def formfield(self, request, field_name, **kwargs):
         if field_name == 'setor_id_setor':
@@ -20,7 +20,7 @@ class UsuarioAdmin(admin.ModelAdmin):
 
 
 class SetorAdmin(admin.ModelAdmin):
-    form = SetorForm
+
     list_display = ('id_setor', 'setor_abrev',
                     'setor_full', 'orgao_abrev')
 
