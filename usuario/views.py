@@ -21,24 +21,19 @@ def loginpage(request):
 
         if user:
             login(request, user)
-            return HttpResponse("Usuário autenticado com sucesso")
+            return render(request, 'app/dashboard.html', context=context)
         else:
             return HttpResponse("Usuário com dedos errados.")
 
 
 def cadastropage(request):
+    form = CadastroForm
+    context = {
+        'form': form,
+    }
     if request.method == "GET":
-        form = CadastroForm
-        context = {
-            'form': form,
-        }
         return render(request, 'usuario/cadastro-page.html', context=context)
     else:
-        form = CadastroForm(request.POST)
-        context = {
-            'form': form,
-        }
-
         nome = request.POST.get('fname')
         sobrenome = request.POST.get('lname')
         email = request.POST.get('Email')

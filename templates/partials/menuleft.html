@@ -11,8 +11,16 @@
           <li><a class="dropdown-item" href="#">Visita</a></li>
         </ul>
             <a href="{% url 'app-home' %}"><button class="btn btn-outline-secondary border-0">Configuração</button></a>
-        <div class="foto-usuario">
-          <img src="{% static "img/main/usuariofrog.jpg" %}" alt="Foto do Usuário">
-          <span> {{ Usuario.nomeusuario }} </span>
-        </div>
+        <div class="mlfooter">
+            <div class="foto-usuario">
+                <img src="{% static "img/main/usuariofrog.jpg" %}" alt="Foto do Usuário">
+                <span> {{ user.first_name }} </span>
+            </div>
+            <div class="logout">
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                     <button type="submit"><i class="bi bi-box-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>    
 </div>
