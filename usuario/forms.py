@@ -12,7 +12,7 @@ class CadastroForm(forms.Form):
     lname = forms.CharField(label="Sobrenome:", max_length=200)
     Email = forms.EmailField(label="Email:", max_length=200)
     ConfEmail = forms.CharField(label="Confirme o seu Email:", max_length=200)
-    cpf = forms.CharField(label="CPF:", max_length=20)
+    cpf = forms.CharField(label="CPF:", max_length=11)
     senha = forms.CharField(label="Senha:", widget=forms.PasswordInput())
     ConfSenha = forms.CharField(label="Confirme sua Senha:", widget=forms.PasswordInput())
 
