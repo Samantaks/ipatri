@@ -8,7 +8,8 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="{% url 'item-cadastro' %}">Cadastro</a></li>
-          <li><a class="dropdown-item" href="#">Visita</a></li>
+          <li><a class="dropdown-item" href="{% url 'visita-setor' %}">Visita</a></li>
+          <li><a class="dropdown-item" href="{% url 'movimentacao' %}">Movimentação</a></li>  
         </ul>
             <a href="{% url 'app-home' %}"><button class="btn btn-outline-secondary border-0">Configuração</button></a>
         <div class="mlfooter">

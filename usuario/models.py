@@ -26,6 +26,9 @@ class Usuario(models.Model):
     setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor',
                                        verbose_name='Setor', related_name='usuarios')
 
+    def __str__(self):
+        return f'{self.cpf} - {self.nomeusuario} {self.sobrenome}'
+
     class Meta:
         managed = False
         db_table = 'usuario'

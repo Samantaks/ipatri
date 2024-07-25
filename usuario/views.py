@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .models import Usuario
 from django.http.response import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 def loginpage(request):
@@ -59,3 +60,8 @@ def cadastropage(request):
                               email=new_email, senha=new_senha, cpf=new_cpf)
         new_usuario.save()
     return render(request, 'usuario/cadastro-page.html', context=context)
+
+
+@login_required(login_url='login-page')
+def bio(request):
+    return render(request, 'app/usuario_page.html')

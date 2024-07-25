@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "app/app_main.html" %}
+{% block title %} i-Patri User {% endblock %}
+{% load static %}
+
+{% block customStyle %} 
+    <link rel="stylesheet" href="{% static 'css/_pages/page-userinfo.css' %}" type="text/css">
+{% endblock %}
+
+{% block customJs %}
+{% endblock %}
+
+
+{% block mainContent %}
+    
+<div class="inside-box">
+<h1>
+    Estás na página Pessoal
+</h1>
+</div>    
+   
+{% endblock %}
+

@@ -31,3 +31,17 @@ def itemcadastro(request):
             return redirect('itemcadastro')
 
         return render(request, "app/itens_cadastro.html", context=context)
+
+
+@login_required(login_url='login-page')
+def itemvisita(request):
+    form = ItensCadastroForm
+    context = {'form': form}
+    return render(request, "app/itens-visita.html", context=context)
+
+
+@login_required(login_url='login-page')
+def itemmov(request):
+    form = ItensCadastroForm
+    context = {'form': form}
+    return render(request, "app/itens-mov.html", context=context)
