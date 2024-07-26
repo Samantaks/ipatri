@@ -1,10 +1,8 @@
 from django.contrib import admin
 from .models import Usuario, Setor
-# from .forms import UsuarioForm, SetorForm
 
 
 class UsuarioAdmin(admin.ModelAdmin):
-   # form = UsuarioForm
     list_display = ('idusuario', 'nomeusuario', 'sobrenome',
                     'email', 'cpf', 'get_setor_nome')
 

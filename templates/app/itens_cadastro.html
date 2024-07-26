@@ -14,9 +14,16 @@
     
 <div class="inside-box">
 <h1>
-    Estás na página ITENS +: CADASTRO DE ITENS
+    Cadastre um item:
 </h1>
-</div>    
-   
+
+    <form action="{% url "item-cadastro" %}" method="post">
+                {% csrf_token %}
+                 {{ form.errors }}
+                 {{ form }}
+        <div class="lgn-botao">
+        <input type="submit" value="Registre" class="form-botao">
+        </div>
+    </form>
 {% endblock %}
 

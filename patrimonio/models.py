@@ -34,7 +34,7 @@ class Item(models.Model):
     datacompra = models.DateField(blank=True, null=True)
     itemano = models.IntegerField(blank=True, null=True)
     marca = models.CharField(max_length=50, blank=True, null=True)
-    valorcompra = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
+    valorcompra = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     notafiscal = models.IntegerField(blank=True, null=True)
     depreciacao_iddepreciacao1 = models.ForeignKey(Depreciacao,
                                                    models.DO_NOTHING, db_column='depreciacao_iddepreciacao1')
