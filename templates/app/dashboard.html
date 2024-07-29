@@ -12,10 +12,51 @@
 {% endblock %}
 {% block mainContent %}
 <div class="inside-box ">
+    <div class="top-box">
+        <div class="col-md informacoes_basicas">
+            <i class="bi bi-bank"></i>
+            <h5> Setores cadastrados</h5>
+            <span id="setores_total">5</span>
+        </div>    
     
-<div class="container">
-    Dashboard Page
-</div>
+        <div class="col-md informacoes_basicas">
+            <i class="bi bi-cash-coin"></i>
+            <h5>Gasto total no mês</h5>
+            <span id="gasto_total">R$ 8648</span>
+        </div>
+    </div>
+    
+    <div class="col">
+        <div class="col-md">
+            <br>
+            <h3>Faturamento:</h3>
+            <canvas id="faturamento_mensal" width="250" height="200"></canvas>
+        </div>
+
+        <div class="col-md">
+            <br>
+            <h3>Despesas:</h3>
+            <canvas id="despesas_mensal" width="250" height="200"></canvas>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md">
+            <br>
+
+            <h1>Produtos mais vendidos:</h1>
+            <canvas id="produtos_mais_vendidos" width="250" height="200"></canvas>
+        </div>
+    </div>
+
+<br>
+    <footer class="container"></footer>
+
+    <script>
+        window.onload = function(e){}
+    </script>
 
 </div>    
 {% endblock %}
