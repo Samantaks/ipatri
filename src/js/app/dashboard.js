@@ -43,7 +43,7 @@ function relatorio_gasto(url){
                     data: data.datacompra,
                     backgroundColor: cores_faturamento_mensal[0],
                     borderColor: cores_faturamento_mensal[1],
-                    borderWidth: 0.2
+                    borderWidth: 1
                 }]
             },
             options: {
@@ -54,11 +54,68 @@ function relatorio_gasto(url){
                 }
             }
         });
-
-
     })
+}
 
 
+function relatorio_marcas(url){
+    fetch(url, {
+        method: 'get',
+    }).then(function(result){
+        return result.json()
+    }).then(function(data){
+        const ctx = document.getElementById('gastos_marca').getContext('2d');
+        let cores_faturamento_mensal = gera_cor(qtd=5)
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels:data.labels,
+                datasets: [{
+                    label:'Gastos geral da Marca' ,
+                    data: data.data,
+                    backgroundColor: cores_faturamento_mensal[0],
+                    borderColor: cores_faturamento_mensal[1],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+}
 
-
+function relatorio_setores(url){
+    fetch(url,
+        {method: 'get',
+    }).then(function(result){
+        return result.json()
+    }).then(function(data){
+        const ctx = document.getElementById('gastos_setor').getContext('2d');
+        let cores_faturamento_mensal = gera_cor(qtd=3)
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels:data.labels,
+                datasets: [{
+                    label:'Gastos geral do Setor' ,
+                    data: data.data,
+                    backgroundColor: cores_faturamento_mensal[0],
+                    borderColor: cores_faturamento_mensal[1],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
 }

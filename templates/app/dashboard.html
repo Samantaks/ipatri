@@ -13,9 +13,9 @@
             <h5> <i class="bi bi-bank"></i> Setores : <span id="setores_total">3</span> </h5>
         </div>
         <div class="col-md informacoes_basicas">
-            
+
             <h5><i class="bi bi-cash-coin"></i> R$ <span id="gasto_total"></span></h5>
-            
+
         </div>
     </div>
     
@@ -27,8 +27,8 @@
             <canvas id="gastos_mensal" width="500" height="200"></canvas>
         </div>
     </div>
-    
-    
+    <br>
+    <br>
     <div class="top-box">
         <div class="col-md">
             <h3>Gasto por Setor</h3>
@@ -41,13 +41,15 @@
     </div>
     
     <footer class="container"></footer>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'js/app/dashboard.js' %}"></script>
     <script>
         window.onload = function(event){
             retorna_total_gasto('{% url "app-retorna-total-gasto" %}')
             relatorio_gasto('{% url "app-relatorio-gasto" %}')
+            relatorio_marcas('{% url "app-relatorio-marcas" %}')
+            relatorio_setores('{% url "app-relatorio-setor" %}')
         }
     </script>
 </div>    
