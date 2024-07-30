@@ -6,22 +6,16 @@
     <link rel="stylesheet" href="{% static 'css/_pages/app/dashboard.css' %}" type="text/css">
 {% endblock %}
 
-{% block customJs %}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static 'js/app/dashboard.js' %}"></script>
-{% endblock %}
 {% block mainContent %}
 <div class="inside-box ">
     <div class="top-box">
         <div class="col-md informacoes_basicas">
-            <i class="bi bi-bank"></i>
-            <h5> Setores cadastrados</h5>
-            <span id="setores_total">5</span>
+            <h5> <i class="bi bi-bank"></i> Setores : <span id="setores_total">3</span> </h5>
         </div>
         <div class="col-md informacoes_basicas">
-            <i class="bi bi-cash-coin"></i>
-            <h5>Gasto total do mês</h5>
-            <span id="gasto_total">R$ 8648</span>
+            
+            <h5><i class="bi bi-cash-coin"></i> R$ <span id="gasto_total"></span></h5>
+            
         </div>
     </div>
     
@@ -47,8 +41,14 @@
     </div>
     
     <footer class="container"></footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/app/dashboard.js' %}"></script>
     <script>
-        window.onload = function(e){}
+        window.onload = function(event){
+            retorna_total_gasto('{% url "app-retorna-total-gasto" %}')
+            relatorio_gasto('{% url "app-relatorio-gasto" %}')
+        }
     </script>
 </div>    
 {% endblock %}

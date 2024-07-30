@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from patrimonio.models import Item
+from usuario.models import Setor
 from datetime import datetime
 from django.http import JsonResponse
 from django.db.models import Sum
+from collections import Counter
 
 
 @login_required(login_url='login-page')
@@ -20,45 +22,51 @@ def retorna_total_gasto(request):
 @login_required(login_url='login-page')
 def relatorio_gasto(request):
     x = Item.objects.all()
-
     meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
     datacompra = []
     labels = []
     const = 0
     mes = datetime.now().month + 1
     ano = datetime.now().year
-
     for i in range(12):
         mes -= 1
         if mes == 0:
             mes = 12
             ano -= 1
-
         y = sum([i.valorcompra for i in x if i.datacompra.month == mes and i.datacompra.year == ano])
         labels.append(meses[mes - 1])
         datacompra.append(y)
         const += 1
-
     data_json = {'datacompra': datacompra[::-1], 'labels': labels[::-1]}
-
     return JsonResponse(data_json)
 
 
 @login_required(login_url='login-page')
 def relatorio_marcas(request):
     x = Item.objects.all()
-
-    label = []
-    datacompra = []
-    for x in i:
-        valorcompra = Item.objects.filter(marca=x).aggregate(Sum('valorcompra'))
-        if not valorcompra['valorcompra__sum']:
-            valorcompra['valorcompra__sum'] = 0
-        label.append(x.marca)
-        datacompra.append(valorcompra['valorcompra__sum'])
-    z = list(zip(label, datacompra))
-    z.sort(key=lambda z: z[1], reverse=True)
+    contador_marcas = Counter(item.marca for item in x)
+    soma_valorcompra_por_marca = {}
+    for marca, count in contador_marcas.items():
+        soma_valorcompra_por_marca[marca] = x.filter(marca=marca).aggregate(Sum('valorcompra'))['valorcompra__sum']
+    labels = list(soma_valorcompra_por_marca.keys())
+    data = list(soma_valorcompra_por_marca.values())
+    z = list(zip(labels, data))
+    z.sort(key=lambda item: item[1], reverse=True)
     z = list(zip(*z))
+    return JsonResponse({'labels': z[0][:3], 'data': z[1][:3]})
 
-    return JsonResponse({'labels': z[0][:3], 'datacompra': z[1][:3]})
 
+@login_required(login_url='login-page')
+def relatorio_setor(request):
+    x = Item.objects.all()
+    contador_setores = Counter(item.setor_id_setor for item in x)
+    soma_valorcompra_por_setor = {}
+    for setor, count in contador_setores.items():
+        soma_valorcompra_por_setor[setor] = x.filter(setor_id_setor=setor).aggregate(Sum('valorcompra'))[
+            'valorcompra__sum']
+    labels = [str(setor) for setor in soma_valorcompra_por_setor.keys()]
+    data = list(soma_valorcompra_por_setor.values())
+    z = list(zip(labels, data))
+    z.sort(key=lambda item: item[1], reverse=True)
+    z = list(zip(*z))
+    return JsonResponse({'labels': z[0][:2], 'data': z[1][:2]})
