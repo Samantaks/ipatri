@@ -3,9 +3,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100px;
+    height: fit-content;
     margin-right: auto;
-    margin-left: 1%;
 }
 
 .top-box{
@@ -13,4 +12,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
+}
+.bi{
+    color: #C040B9;
 }

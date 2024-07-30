@@ -17,47 +17,39 @@
             <i class="bi bi-bank"></i>
             <h5> Setores cadastrados</h5>
             <span id="setores_total">5</span>
-        </div>    
-    
+        </div>
         <div class="col-md informacoes_basicas">
             <i class="bi bi-cash-coin"></i>
-            <h5>Gasto total no mês</h5>
+            <h5>Gasto total do mês</h5>
             <span id="gasto_total">R$ 8648</span>
         </div>
     </div>
     
-    <div class="col">
-        <div class="col-md">
-            <br>
-            <h3>Faturamento:</h3>
-            <canvas id="faturamento_mensal" width="250" height="200"></canvas>
-        </div>
-
-        <div class="col-md">
-            <br>
-            <h3>Despesas:</h3>
-            <canvas id="despesas_mensal" width="250" height="200"></canvas>
-        </div>
-
-    </div>
-
+    <hr>
+    
     <div class="row">
-
         <div class="col-md">
-            <br>
-
-            <h1>Produtos mais vendidos:</h1>
-            <canvas id="produtos_mais_vendidos" width="250" height="200"></canvas>
+            <h3>Gastos por mês</h3>
+            <canvas id="gastos_mensal" width="500" height="200"></canvas>
         </div>
     </div>
-
-<br>
+    
+    
+    <div class="top-box">
+        <div class="col-md">
+            <h3>Gasto por Setor</h3>
+            <canvas id="gastos_setor" width="200" height="200"></canvas>
+        </div>
+        <div class="col-md">
+            <h3>Mais comprados</h3>
+            <canvas id="gastos_marca" width="200" height="200"></canvas>
+        </div>
+    </div>
+    
     <footer class="container"></footer>
-
     <script>
         window.onload = function(e){}
     </script>
-
 </div>    
 {% endblock %}
 
