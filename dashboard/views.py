@@ -1,12 +1,25 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from patrimonio.models import Item
-from usuario.models import Setor
+from usuario.models import Usuario
 from datetime import datetime
 from django.http import JsonResponse
 from django.db.models import Sum
 from collections import Counter
 
+
+@login_required(login_url='login-page')
+def estoque(request):
+    if request.user.is_authenticated:
+        usuario = Usuario.objects.get(idusuario=request.user.id)
+        setor = usuario.setor_id_setor
+        itens = Item.objects.filter(setor_id_setor=setor)
+        context = {
+            'itens': itens
+        }
+        return render(request, 'app/estoque.html', context)
+    else:
+        return render(request, 'app/estoque.html', {'itens': []})
 
 @login_required(login_url='login-page')
 def dashboardpage(request):

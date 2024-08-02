@@ -13,9 +13,12 @@
 {% block mainContent %}
     
 <div class="inside-box">
-<h1>
-    Estás na página ITENS +: VISITA
-</h1>
+<h1>Itens do Setor: {{ setor.setor_abrev }}</h1>
+    <ul>
+        {% for item in itens %}
+            <li>{{ item.itemnome }}</li>
+        {% endfor %}
+    </ul>
 </div>    
    
 {% endblock %}

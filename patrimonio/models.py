@@ -41,6 +41,9 @@ class Item(models.Model):
                                                    db_column='depreciacao_iddepreciacao1')
     setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor')
 
+    def __str__(self):
+        return f'{self.idpatrimonio} - {self.itemnome}:  {self.setor_id_setor}'
+
     class Meta:
         managed = False
         db_table = 'item'

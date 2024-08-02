@@ -13,9 +13,23 @@
 {% block mainContent %}
     
 <div class="inside-box">
-<h1>
-    Estás na página Pessoal
-</h1>
+<h1>Perfil do Usuário</h1>
+    {% if usuario %}
+        <p><strong>Nome:</strong> {{ usuario.nomeusuario }}</p>
+        <p><strong>Sobrenome:</strong> {{ usuario.sobrenome }}</p>
+        <p><strong>Email:</strong> {{ usuario.email }}</p>
+        <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+        <p><strong>Setor:</strong> {{ usuario.setor_id_setor }}</p>
+    {% else %}
+        <p>Usuário não encontrado.</p>
+    {% endif %}
+    
+    <h2>Alterar Senha</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Alterar Senha</button>
+    </form>
 </div>    
    
 {% endblock %}

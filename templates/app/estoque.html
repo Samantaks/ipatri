@@ -13,9 +13,33 @@
 {% block mainContent %}
     
 <div class="inside-box">
-<h1>
-    Estás na página Estoque
-</h1>
+<h1>Itens no estoque seu Setor</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tombo</th>
+                <th>Nome do Item</th>
+                <th>Marca</th>
+                <th>Data de Compra</th>
+                <th>Valor de Compra</th>
+                <th>Nota Fiscal</th>
+                <th>Setor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in itens %}
+            <tr>
+                <td>{{ item.tombo }}</td>
+                <td>{{ item.itemnome }}</td>
+                <td>{{ item.marca }}</td>
+                <td>{{ item.datacompra }}</td>
+                <td>{{ item.valorcompra }}</td>
+                <td>{{ item.notafiscal }}</td>
+                <td>{{ item.setor_id_setor }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>    
    
 {% endblock %}

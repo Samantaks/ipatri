@@ -1,10 +1,36 @@
 from usuario.forms import LoginForm, CadastroForm
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from .models import Usuario
 from django.http.response import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from .models import Usuario
+
+
+@login_required
+def perfil(request):
+    try:
+        usuario = Usuario.objects.get(cpf=request.user.username)
+    except Usuario.DoesNotExist:
+        usuario = None
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important, to keep the user logged in after password change
+            return redirect('perfil')
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+    context = {
+        'usuario': usuario,
+        'form': form
+    }
+
+    return render(request, 'app/usuario_page.html', context)
 
 
 def loginpage(request):

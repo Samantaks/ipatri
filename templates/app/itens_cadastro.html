@@ -8,22 +8,18 @@
 
 {% block customJs %}
 {% endblock %}
-
-
 {% block mainContent %}
     
 <div class="inside-box">
-<h1>
-    Cadastre um item:
-</h1>
+    <h2>Cadastre um item:</h2>
 
     <form action="{% url "item-cadastro" %}" method="post">
                 {% csrf_token %}
                  {{ form.errors }}
                  {{ form }}
         <div class="lgn-botao">
-        <input type="submit" value="Registre" class="form-botao">
+          <input type="submit" value="Registre" class="form-botao">
         </div>
     </form>
+</div>    
 {% endblock %}
-

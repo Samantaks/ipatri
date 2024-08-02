@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from patrimonio.forms import ItensCadastroForm
 from .models import Item
+from usuario.models import Setor
 
 
 @login_required(login_url='login-page')
@@ -21,8 +22,9 @@ def itemcadastro(request):
         new_item_data = request.POST.get('ItemData')
         new_item_notafiscal = request.POST.get('ItemNotafiscal')
 
-        new_item_salvo = Item( descricao= new_item_descricao, datacompra= new_item_data , tombo=new_item_tombo, marca=new_item_marca, notafiscal=new_item_notafiscal,
-                              valorcompra=new_item_preco, itemnome=new_item_nome, itemano=new_item_ano)
+        new_item_salvo = Item(descricao=new_item_descricao, datacompra=new_item_data, tombo=new_item_tombo,
+                              marca=new_item_marca, notafiscal=new_item_notafiscal, valorcompra=new_item_preco,
+                              itemnome=new_item_nome, itemano=new_item_ano)
         new_item_salvo.save()
 
     return render(request, "app/itens_cadastro.html", context=context)
@@ -30,9 +32,7 @@ def itemcadastro(request):
 
 @login_required(login_url='login-page')
 def itemvisita(request):
-    form = ItensCadastroForm
-    context = {'form': form}
-    return render(request, "app/itens-visita.html", context=context)
+    return render(request, "app/itens-visita.html")
 
 
 @login_required(login_url='login-page')
@@ -40,3 +40,5 @@ def itemmov(request):
     form = ItensCadastroForm
     context = {'form': form}
     return render(request, "app/itens-mov.html", context=context)
+
+
