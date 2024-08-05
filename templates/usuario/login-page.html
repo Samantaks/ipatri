@@ -9,6 +9,25 @@
 
 {% block mainContent %}
     <div class="lgn-box">
+     {% if user.is_authenticated %}
+         <h1>Você já está logado:</h1>
+
+         <div class="lgn-botao">
+                <form action="{% url 'app-home' %}" method="post">
+                    {% csrf_token %}
+                     <input type="submit" value="APP" class="form-botao">
+                </form>
+         </div>
+         
+         <div class="lgn-botao">
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                     <input type="submit" value="Deslogar" class="form-botao">
+                </form>
+         </div>
+     {% endif %}
+        
+        {% if not user.is_authenticated %}
         <div class="hdr">
             <img src="{% static "img/main/logo_ipatri.png " %}" alt="logo do site" width="75" height="75">
             <h2> Acesse a sua conta </h2>
@@ -42,6 +61,7 @@
                 <a href="{% url 'cadastro-page' %}">Cadastre-se!</a>
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
 

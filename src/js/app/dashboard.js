@@ -8,6 +8,16 @@ function retorna_total_gasto(url){
     })
 }
 
+ function retorna_quantidade_setores(url) {
+            fetch(url, {
+                method: 'GET',
+            }).then(function(result) {
+                return result.json()
+            }).then(function(id_setor) {
+                document.getElementById('setores_total').innerHTML = id_setor.quantidade
+            })
+        }
+
 
 function gera_cor(qtd=1){
     var bg_color = []

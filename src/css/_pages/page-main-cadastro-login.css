@@ -47,3 +47,14 @@ nav{
     align-items: center;
 }
 
+.logout{
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.logout button{
+    background-color: #D3D3D3;
+}

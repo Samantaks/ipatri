@@ -21,6 +21,9 @@ class Depreciacao(models.Model):
     contacontabil_idcontacontabil = models.ForeignKey(Contacontabil,
                                                       models.DO_NOTHING, db_column='contacontabil_idcontacontabil')
 
+    def __str__(self):
+        return f'{self.iddepreciacao} - {self.nometipodepreciacao}'
+
     class Meta:
         managed = False
         db_table = 'depreciacao'

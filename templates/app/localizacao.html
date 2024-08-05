@@ -6,20 +6,9 @@
     <link rel="stylesheet" href="{% static 'css/_pages/app/localizacao.css' %}" type="text/css">
 {% endblock %}
 
-{% block customJs %}
-{% endblock %}
-
 
 {% block mainContent %}
-    
-<div class="inside-box">
-  <h1>Itens do Setor: {{ setor.setor_abrev }}</h1>
-    <ul>
-        {% for item in itens %}
-            <li>{{ item.itemnome }}</li>
-        {% endfor %}
-    </ul>
-</div>    
+<h1>PÁGINA LOCALIZAÇÃO</h1>
    
 {% endblock %}
 

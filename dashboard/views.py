@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from patrimonio.models import Item
-from usuario.models import Usuario
+from usuario.models import Usuario, Setor
 from datetime import datetime
 from django.http import JsonResponse
 from django.db.models import Sum
@@ -21,9 +21,18 @@ def estoque(request):
     else:
         return render(request, 'app/estoque.html', {'itens': []})
 
+
+# Dashboard e Views de itens no Dashboard:
+
 @login_required(login_url='login-page')
 def dashboardpage(request):
     return render(request, "app/dashboard.html")
+
+
+@login_required(login_url='login-page')
+def retorna_quantidade_setores(request):
+    quantidade = Setor.objects.count()
+    return JsonResponse({'quantidade': quantidade})
 
 
 @login_required(login_url='login-page')
@@ -83,3 +92,6 @@ def relatorio_setor(request):
     z.sort(key=lambda item: item[1], reverse=True)
     z = list(zip(*z))
     return JsonResponse({'labels': z[0][:2], 'data': z[1][:2]})
+
+# Fim das views da Dashboard e itens da dashboard
+
