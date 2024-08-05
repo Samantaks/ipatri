@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from patrimonio.forms import ItensCadastroForm
+from .forms import ItensCadastroForm, ItemSearchForm, EditItemSetorForm
 from .models import Item
 from usuario.models import Setor
 
@@ -57,6 +57,29 @@ def itemvisita(request):
 
 @login_required(login_url='login-page')
 def itemmov(request):
-    form = ItensCadastroForm
-    context = {'form': form}
-    return render(request, "app/itens-mov.html", context=context)
+    search_form = ItemSearchForm()
+    edit_form = None
+    item = None
+
+    if request.method == 'GET' and 'tombo' in request.GET:
+        search_form = ItemSearchForm(request.GET)
+        if search_form.is_valid():
+            tombo = search_form.cleaned_data['tombo']
+            item = Item.objects.filter(tombo=tombo).first()
+            if item:
+                edit_form = EditItemSetorForm(instance=item)
+
+    if request.method == 'POST' and 'item_id' in request.POST:
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(Item, pk=item_id)
+        edit_form = EditItemSetorForm(request.POST, instance=item)
+        if edit_form.is_valid():
+            edit_form.save()
+            return render(request, 'app/itens-mov.html')
+
+    context = {
+        'search_form': search_form,
+        'edit_form': edit_form,
+        'item': item,
+    }
+    return render(request, 'app/itens-mov.html', context)

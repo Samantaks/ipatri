@@ -1,5 +1,5 @@
 from django import forms
-from .models import Depreciacao
+from .models import Depreciacao, Item
 from usuario.models import Setor
 
 
@@ -33,3 +33,16 @@ class ItensCadastroForm(forms.Form):
         required=True,
         widget=forms.Select
     )
+
+
+class ItemSearchForm(forms.Form):
+    tombo = forms.IntegerField(label='Tombo', required=True)
+
+
+class EditItemSetorForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['setor_id_setor']
+        widgets = {
+            'setor_id_setor': forms.Select(attrs={'class': 'form-control'}),
+        }

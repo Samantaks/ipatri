@@ -6,6 +6,25 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.db.models import Sum
 from collections import Counter
+from .forms import ItemSearchForm
+
+
+@login_required(login_url='login-page')
+def localizacao(request):
+    form = ItemSearchForm()
+    item = None
+
+    if request.method == 'GET' and 'tombo' in request.GET:
+        form = ItemSearchForm(request.GET)
+        if form.is_valid():
+            tombo = form.cleaned_data['tombo']
+            item = Item.objects.filter(tombo=tombo).first()
+
+    context = {
+        'form': form,
+        'item': item,
+    }
+    return render(request, 'app/localizacao.html', context)
 
 
 @login_required(login_url='login-page')
