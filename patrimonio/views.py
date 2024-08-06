@@ -60,12 +60,14 @@ def itemmov(request):
     search_form = ItemSearchForm()
     edit_form = None
     item = None
+    item_searched = False
 
     if request.method == 'GET' and 'tombo' in request.GET:
         search_form = ItemSearchForm(request.GET)
         if search_form.is_valid():
             tombo = search_form.cleaned_data['tombo']
             item = Item.objects.filter(tombo=tombo).first()
+            item_searched = True
             if item:
                 edit_form = EditItemSetorForm(instance=item)
 
@@ -75,11 +77,14 @@ def itemmov(request):
         edit_form = EditItemSetorForm(request.POST, instance=item)
         if edit_form.is_valid():
             edit_form.save()
-            return render(request, 'app/itens-mov.html')
+            edit_form = None
+            item = None
+            search_form = ItemSearchForm()
 
     context = {
         'search_form': search_form,
         'edit_form': edit_form,
         'item': item,
+        'item_searched': item_searched,
     }
     return render(request, 'app/itens-mov.html', context)

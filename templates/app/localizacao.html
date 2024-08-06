@@ -5,33 +5,32 @@
 {% block customStyle %} 
     <link rel="stylesheet" href="{% static 'css/_pages/app/localizacao.css' %}" type="text/css">
 {% endblock %}
-4
 
 {% block mainContent %}
     <div class="inside-box ">
     <h1>Busca de Item por Tombo</h1>
     <form method="get">
-        {{ form.as_p }}
-        <button type="submit">Buscar</button>
-    </form>
+    {{ form.as_p }}
+    <button type="submit">Buscar</button>
+</form>
 
-    {% if item %}
-        <h2>Resultados da Pesquisa:</h2>
-        <ul>
-            <li>ID Patrimônio: {{ item.idpatrimonio }}</li>
-            <li>Nome do Item: {{ item.itemnome }}</li>
-            <li>Descrição: {{ item.descricao }}</li>
-            <li>Tombo: {{ item.tombo }}</li>
-            <li>Marca: {{ item.marca }}</li>
-            <li>Ano do Item: {{ item.itemano }}</li>
-            <li>Data de Compra: {{ item.datacompra }}</li>
-            <li>Valor de Compra: {{ item.valorcompra }}</li>
-            <li>Nota Fiscal: {{ item.notafiscal }}</li>
-            <li>Depreciação: {{ item.depreciacao_iddepreciacao1 }}</li>
-            <li>Setor: {{ item.setor_id_setor }}</li>
-        </ul>
-    {% elif item is not None %}
-        <p>Nenhum item encontrado com esse tombo.</p>
-    {% endif %}
+{% if item %}
+    <h2>Resultados da Pesquisa:</h2>
+    <ul>
+        <li>ID Patrimônio: {{ item.idpatrimonio }}</li>
+        <li>Nome do Item: {{ item.itemnome }}</li>
+        <li>Descrição: {{ item.descricao }}</li>
+        <li>Tombo: {{ item.tombo }}</li>
+        <li>Marca: {{ item.marca }}</li>
+        <li>Ano do Item: {{ item.itemano }}</li>
+        <li>Data de Compra: {{ item.datacompra }}</li>
+        <li>Valor de Compra: {{ item.valorcompra }}</li>
+        <li>Nota Fiscal: {{ item.notafiscal }}</li>
+        <li>Depreciação: {{ item.depreciacao_iddepreciacao1 }}</li>
+        <li>Setor: {{ item.setor_id_setor }}</li>
+    </ul>
+{% elif item_searched %}
+    <p>Nenhum item encontrado com esse tombo.</p>
+{% endif %}
     </div>
 {% endblock %}

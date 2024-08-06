@@ -13,16 +13,19 @@ from .forms import ItemSearchForm
 def localizacao(request):
     form = ItemSearchForm()
     item = None
+    item_searched = False  # Variável para rastrear se a busca foi realizada
 
     if request.method == 'GET' and 'tombo' in request.GET:
         form = ItemSearchForm(request.GET)
         if form.is_valid():
             tombo = form.cleaned_data['tombo']
             item = Item.objects.filter(tombo=tombo).first()
+            item_searched = True  # Marca que a busca foi realizada
 
     context = {
         'form': form,
         'item': item,
+        'item_searched': item_searched,  # Adiciona a variável ao contexto
     }
     return render(request, 'app/localizacao.html', context)
 

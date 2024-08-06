@@ -18,22 +18,22 @@
 </h1>
 <br>
 <form method="get">
-        {{ search_form.as_p }}
-        <button type="submit">Buscar</button>
-    </form>
+    {{ search_form.as_p }}
+    <button type="submit">Buscar</button>
+</form>
 
-    {% if item %}
-        <h2>Editar Setor do Item: {{ item.itemnome }}</h2>
-        <!-- Formulário de Edição -->
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="item_id" value="{{ item.idpatrimonio }}">
-            {{ edit_form.as_p }}
-            <button type="submit">Salvar</button>
-        </form>
-    {% elif item is not None %}
-        <p>Nenhum item encontrado com esse tombo.</p>
-    {% endif %}
+{% if item %}
+    <h2>Editar Setor do Item: {{ item.itemnome }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="item_id" value="{{ item.idpatrimonio }}">
+        {{ edit_form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    
+{% elif item_searched %}
+    <p>Nenhum item encontrado com esse tombo.</p>
+{% endif %}
 </div>    
    
 {% endblock %}
