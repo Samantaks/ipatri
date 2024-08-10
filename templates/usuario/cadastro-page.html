@@ -31,12 +31,19 @@
         <div class="hdr">
             <img src="{% static "img/main/logo_ipatri.png" %}" alt="logo do site" width="75" height="75">
             <h2> Crie uma Conta </h2>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                         {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         
         <div class="cadastro-form">
              <form action="{% url "cadastro-page" %}" method="post">
                 {% csrf_token %}
-                 {{ form.errors }}
                  
                  <div class="cadastro-wrapper">
                      {{ form.fname.as_field_group }}

@@ -42,3 +42,13 @@ class SetorForm(forms.ModelForm):
         super(SetorForm, self).__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
             self.fields['id_setor'].initial = self.instance.setor_id_setor
+
+
+class UsuarioSearchForm(forms.Form):
+    cpf = forms.CharField(label='CPF', max_length=15, required=True)
+
+
+class EditUsuarioSetorForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['setor_id_setor']

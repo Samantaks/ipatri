@@ -4,12 +4,13 @@
           <img src="{% static "img/main/logo_ipatri.png" %}" alt="Logo da Empresa">
         </div>
         <button class="dropdown-toggle btn btn-outline-secondary border-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Item
+          Operações
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="{% url 'item-cadastro' %}">Cadastro</a></li>
-          <li><a class="dropdown-item" href="{% url 'visita-setor' %}">Visita</a></li>
-          <li><a class="dropdown-item" href="{% url 'movimentacao' %}">Movimentação</a></li>  
+            <li><a class="dropdown-item" href="{% url 'item-cadastro' %}">Cadastro</a></li>
+            <li><a class="dropdown-item" href="{% url 'visita-setor' %}">Vistoria</a></li>
+            <li><a class="dropdown-item" href="{% url 'movimentacao' %}">Movimentação</a></li>
+            <li><a class="dropdown-item" href="{% url 'user-setor-change' %}">Servidores</a></li>
         </ul>
         <div class="mlfooter">
             <div class="foto-usuario">

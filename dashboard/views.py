@@ -33,16 +33,20 @@ def localizacao(request):
 @login_required(login_url='login-page')
 def estoque(request):
     if request.user.is_authenticated:
-        usuario = Usuario.objects.get(idusuario=request.user.id)
-        setor = usuario.setor_id_setor
-        itens = Item.objects.filter(setor_id_setor=setor)
-        context = {
-            'itens': itens
-        }
+        try:
+            # Assume que o email do usuário autenticado é único
+            usuario = Usuario.objects.get(email=request.user.email)
+            setor = usuario.setor_id_setor
+            itens = Item.objects.filter(setor_id_setor=setor)
+            context = {
+                'itens': itens
+            }
+        except Usuario.DoesNotExist:
+            # Redireciona para uma página de erro ou exibe uma mensagem
+            return render(request, 'app/erro.html', {'mensagem': 'Usuário não encontrado.'})
         return render(request, 'app/estoque.html', context)
     else:
         return render(request, 'app/estoque.html', {'itens': []})
-
 
 # Dashboard e Views de itens no Dashboard:
 

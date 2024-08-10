@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "app/app_main.html" %}
+{% block title %} Servidores {% endblock %}
+{% load static %}
+
+{% block customStyle %} 
+    <link rel="stylesheet" href="{% static 'css/_pages/app/manutencao.css' %}" type="text/css">
+{% endblock %}
+
+{% block customJs %}
+{% endblock %}
+
+
+{% block mainContent %}
+    
+<div class="inside-box">
+    <h1>Digite o CPF do Usuário:</h1>
+    <br>
+    <form method="get">
+        {{ search_form.as_p }}
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if usuario %}
+        <h2>Editar Setor do Usuário: {{ usuario.nomeusuario }} {{ usuario.sobrenome }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="usuario_id" value="{{ usuario.idusuario }}">
+            {{ edit_form.as_p }}
+            <button type="submit">Salvar</button>
+        </form>
+    {% elif usuario_searched %}
+        <p>Nenhum usuário encontrado com esse CPF.</p>
+    {% endif %}
+</div>    
+   
+{% endblock %}
+
