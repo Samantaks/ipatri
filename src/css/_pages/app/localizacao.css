@@ -1,0 +1,38 @@
+.form-wrapper input:focus-visible{
+    outline: none;
+}
+
+.form-wrapper{
+    padding: 1vh;
+    border-style: solid;
+    border-color: #ced4dA;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+}
+
+.form-wrapper input{
+    background-color: transparent;
+    color: #2F1F36;
+    border: none;
+}
+
+
+.form-submit a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    background: #C2C1C1;
+}
+
+.form-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn{
+    padding: 1vh;
+}

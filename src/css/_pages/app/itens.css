@@ -1,0 +1,53 @@
+.form-wrapper input:focus-visible{
+    outline: none;
+}
+
+
+.form-wrapper{
+    padding: 1vh;
+    display: flex;
+    align-items: center;
+}
+
+input{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-wrapper input{
+    background-color: transparent;
+    color: #2F1F36;
+    border-style: solid;
+    border-color: #ced4dA;
+    border-radius: 4px;
+    margin-left: 1vh;
+
+}
+
+
+.form-submit a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    background: #C2C1C1;
+}
+
+.form-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn{
+    padding: 1vh;
+}
+
+textarea{
+    background-color: transparent;
+    color: #2F1F36;
+    border-style: solid;
+    border-color: #ced4dA;
+    border-radius: 4px;
+    margin-left: 1vh;
+}

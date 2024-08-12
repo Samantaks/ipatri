@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 
 
+# Mudar o setor de um usuário
 def usuario_setor(request):
     search_form = UsuarioSearchForm()
     edit_form = None
@@ -45,6 +46,7 @@ def usuario_setor(request):
     return render(request, 'app/setor_servidor.html', context)
 
 
+# Página de Perfil de usuário
 @login_required(login_url='login-page')
 def perfil(request):
     try:
@@ -67,9 +69,8 @@ def perfil(request):
             }
         return render(request, 'app/usuario_page.html', context)
 
-# Na paz:
 
-
+# Logar usuário:
 def loginpage(request):
     form = LoginForm
     context = {
@@ -91,6 +92,7 @@ def loginpage(request):
             return redirect('/login/')
 
 
+# Cadastrar usuário:
 def cadastropage(request):
     form = CadastroForm
     context = {

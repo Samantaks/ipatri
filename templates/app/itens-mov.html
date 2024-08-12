@@ -2,8 +2,8 @@
 {% block title %} Itens + {% endblock %}
 {% load static %}
 
-{% block customStyle %} 
-    <link rel="stylesheet" href="{% static 'css/_pages/app/itens.css' %}" type="text/css">
+{% block customStyle %}
+    <link rel="stylesheet" href="{% static 'css/_pages/app/localizacao.css' %}" type="text/css">
 {% endblock %}
 
 {% block customJs %}
@@ -13,17 +13,27 @@
 {% block mainContent %}
     
 <div class="inside-box">
-<h1>
-    Digite o tombo do Item:
-</h1>
+<h3>
+    Digite o tombo do Patrimônio que desejas mudar de setor:
+</h3>
 <br>
 <form method="get">
-    {{ search_form.as_p }}
-    <button type="submit">Buscar</button>
+   <div class="form-box">    
+            <div class="form-wrapper">        
+                {{ search_form}}
+            </div>
+            <div class="form-submit">
+                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            </div>
+        </div> 
 </form>
 
+<br>
+
 {% if item %}
-    <h2>Editar Setor do Item: {{ item.itemnome }}</h2>
+    <h3>Editar Setor do Item: </h3>
+    <h5>{{ item.itemnome }} que está em {{ item.setor_id_setor }} </h5>
+    <br>
     <form method="post">
         {% csrf_token %}
         <input type="hidden" name="item_id" value="{{ item.idpatrimonio }}">

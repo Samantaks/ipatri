@@ -8,25 +8,33 @@
 
 {% block mainContent %}
     <div class="inside-box ">
-    <h1>Busca de Item por Tombo</h1>
-    <form method="get">
-    {{ form.as_p }}
-    <button type="submit">Buscar</button>
-</form>
-
+        <h1>Busca de Item por Tombo</h1>
+        <br>
+        <form method="get">
+        <div class="form-box">    
+            <div class="form-wrapper">        
+                {{ form }}
+            </div>
+            <div class="form-submit">
+                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            </div>
+        </div>    
+        </form>
+        <br>
 {% if item %}
-    <h2>Resultados da Pesquisa:</h2>
+    <h2>Resultados da busca:</h2>
+
     <ul>         
-        <li>Tombo: {{ item.tombo }}</li>
-        <li>Nome do Item: {{ item.itemnome }}</li>
-        <li>Descrição: {{ item.descricao }}</li>
-        <li>Nota Fiscal: {{ item.notafiscal }}</li>
-        <li>Marca: {{ item.marca }}</li>
-        <li>Ano de fabricação do Patrimônio: {{ item.itemano }}</li>
-        <li>Data de Compra: {{ item.datacompra }}</li>
-        <li>Valor de Compra: {{ item.valorcompra }}</li>
-        <li>Depreciação: {{ item.depreciacao_iddepreciacao1 }}</li>
-        <li>Setor: {{ item.setor_id_setor }}</li>
+        <li><b>Tombo:</b> {{ item.tombo }}</li>
+        <li><b>Nome do Item:</b> {{ item.itemnome }}</li>
+        <li><b>Descrição:</b> {{ item.descricao }}</li>
+        <li><b>Nota Fiscal:</b> {{ item.notafiscal }}</li>
+        <li><b>Marca:</b> {{ item.marca }}</li>
+        <li><b>Ano de fabricação do Patrimônio:</b> {{ item.itemano }}</li>
+        <li><b>Data de Compra:</b> {{ item.datacompra }}</li>
+        <li><b>Valor de Compra:</b> R$ {{ item.valorcompra }}</li>
+        <li><b>Depreciação:</b> {{ item.depreciacao_iddepreciacao1 }}</li>
+        <li><b>Setor:</b> {{ item.setor_id_setor }}</li>
     </ul>
 {% elif item_searched %}
     <p>Nenhum item encontrado com esse tombo.</p>

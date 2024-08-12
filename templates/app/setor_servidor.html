@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block customStyle %} 
-    <link rel="stylesheet" href="{% static 'css/_pages/app/manutencao.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/_pages/app/localizacao.css' %}" type="text/css">
 {% endblock %}
 
 {% block customJs %}
@@ -13,11 +13,17 @@
 {% block mainContent %}
     
 <div class="inside-box">
-    <h1>Digite o CPF do Usuário:</h1>
+    <h3> Para alteações de setor de servidor </h3>
     <br>
     <form method="get">
-        {{ search_form.as_p }}
-        <button type="submit">Buscar</button>
+        <div class="form-box">    
+            <div class="form-wrapper">        
+                {{ search_form }}
+            </div>
+            <div class="form-submit">
+                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            </div>
+        </div>
     </form>
 
     {% if usuario %}

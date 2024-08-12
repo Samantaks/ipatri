@@ -15,11 +15,42 @@
 
     <form action="{% url "item-cadastro" %}" method="post">
                 {% csrf_token %}
-                 {{ form.errors }}
-                 {{ form }}
-        <div class="lgn-botao">
-          <input type="submit" value="Registre" class="form-botao">
-        </div>
+                 <div class="form-wrapper">
+                     {{ form.ItemTombo.as_field_group }}
+                 </div>
+                <div class="form-wrapper">
+                     {{ form.ItemNome.as_field_group }}
+                </div>
+                <div class="form-wrapper">
+                     {{ form.ItemDescricao.as_field_group }}
+                </div>
+                <div class="form-wrapper">
+                     {{ form.ItemMarca.as_field_group }}
+                 </div>
+                <div class="form-wrapper">
+                     {{ form.ItemAno.as_field_group }}
+                </div>
+                <div class="form-wrapper">
+                     {{ form.ItemPreco.as_field_group }}
+                </div>
+                <div class="form-wrapper">
+                     {{ form.ItemData.as_field_group }}
+                 </div>
+                <div class="form-wrapper">
+                     {{ form.ItemNotaFiscal.as_field_group }}
+                </div>
+                <div class="form-wrapper">
+                     {{ form.ItemDepreciacao.as_field_group }}
+                </div>
+                <div class="form-wrapper">
+                     {{ form.ItemCC.as_field_group }}
+                 </div>
+                <div class="form-wrapper">
+                     {{ form.ItemSetor.as_field_group }}
+                </div>
+            <div class="form-submit">
+                <button class="btn btn-outline-secondary" type="submit">Registre</button>
+            </div>
     </form>
 </div>    
 {% endblock %}

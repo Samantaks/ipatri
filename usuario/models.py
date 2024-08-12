@@ -9,7 +9,7 @@ class Setor(models.Model):
     orgao_abrev = models.CharField(max_length=15, db_collation='utf8mb3_general_ci', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.id_setor} - {self.setor_abrev}"
+        return f"{self.setor_abrev} - {self.orgao_abrev}"
 
     class Meta:
         managed = False
