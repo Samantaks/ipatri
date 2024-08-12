@@ -18,12 +18,12 @@
     <table>
         <thead>
             <tr>
-                <th>Tombo</th>
-                <th>Nome do Item</th>
-                <th>Marca</th>
-                <th>Data de Compra</th>
-                <th>Valor de Compra</th>
-                <th>Nota Fiscal</th>
+                <th class="item-tombo">Tombo</th>
+                <th class="item-nome">Nome do Item</th>
+                <th class="item-marca">Marca</th>
+                <th class="item-data">Data de Compra</th>
+                <th class="item-valor">Valor de Compra</th>
+                <th class="item-nota">Nota Fiscal</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +39,7 @@
             {% endfor %}
         </tbody>
     </table>
+    <p><a href="{% url 'export_estoque_xls' %}">Exportar Estoque para XLS</a></p>
 </div>    
    
 {% endblock %}

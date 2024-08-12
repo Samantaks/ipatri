@@ -1,3 +1,5 @@
+import xlwt
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from patrimonio.models import Item
@@ -42,7 +44,7 @@ def estoque(request):
                 'itens': itens
             }
         except Usuario.DoesNotExist:
-            # Redireciona para uma página de erro ou exibe uma mensagem
+
             return render(request, 'app/erro.html', {'mensagem': 'Usuário não encontrado.'})
         return render(request, 'app/estoque.html', context)
     else:
@@ -121,3 +123,46 @@ def relatorio_setor(request):
 
 # Fim das views da Dashboard e itens da dashboard
 
+
+def export_estoque_xls(request):
+    if request.user.is_authenticated:
+        try:
+            usuario = Usuario.objects.get(email=request.user.email)
+            setor = usuario.setor_id_setor
+            itens = Item.objects.filter(setor_id_setor=setor)
+
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = 'attachment; filename="estoque.xls"'
+
+            wb = xlwt.Workbook(encoding='utf-8')
+            ws = wb.add_sheet('Estoque')
+
+            # Cabeçalho da planilha
+            row_num = 0
+            font_style = xlwt.XFStyle()
+            font_style.font.bold = True
+
+            columns = ['Item Tombo', 'Item Nome', 'Marca', 'Data de Compra', 'Preço', 'Nota Fiscal']
+
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)
+
+            # Corpo da planilha
+            font_style = xlwt.XFStyle()
+
+            for item in itens:
+                row_num += 1
+                ws.write(row_num, 0, item.tombo, font_style)
+                ws.write(row_num, 1, item.itemnome, font_style)
+                ws.write(row_num, 2, item.marca, font_style)
+                ws.write(row_num, 3, item.datacompra, font_style)
+                ws.write(row_num, 4, item.valorcompra, font_style)
+                ws.write(row_num, 5, item.notafiscal, font_style)
+
+            wb.save(response)
+            return response
+
+        except Usuario.DoesNotExist:
+            return render(request, 'app/erro.html', {'mensagem': 'Usuário não encontrado.'})
+
+    return HttpResponse("Usuário não autenticado.", status=401)

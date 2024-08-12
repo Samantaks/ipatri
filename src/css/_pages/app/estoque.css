@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+    border-collapse: collapse; /* Remove os espaços entre as bordas das células */
+}
+
+th, td {
+    padding: 10px 15px; /* Adiciona espaço interno (padding) para as células */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+th {
+    background-color: #f4f4f4; /* Cor de fundo para o cabeçalho da tabela */
+}
+
+td {
+    border-bottom: 1px solid #ddd; /* Adiciona uma borda inferior para as células */
+}
+
+th:nth-child(1), td:nth-child(1) {
+    width: 10%; /* Ajuste a largura da coluna Tombo */
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 20%; /* Ajuste a largura da coluna Nome do Item */
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 15%; /* Ajuste a largura da coluna Marca */
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 20%; /* Ajuste a largura da coluna Data de Compra */
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 15%; /* Ajuste a largura da coluna Valor de Compra */
+}
+
+th:nth-child(6), td:nth-child(6) {
+    width: 15%; /* Ajuste a largura da coluna Nota Fiscal */
+}
+
+
+.item-table th, .item-table td {
+    text-align: left;
+}
+
+
