@@ -12,4 +12,5 @@ urlpatterns = [
     path('relatorio_marcas', relatorio_marcas, name='app-relatorio-marcas'),
     path('relatorio_setor', relatorio_setor, name='app-relatorio-setor'),
     path('export_estoque_xls/', export_estoque_xls, name='export_estoque_xls'),
+    path('export_estoque_pdf/', export_estoque_pdf, name='export_estoque_pdf'),
 ]

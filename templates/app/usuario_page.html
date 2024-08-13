@@ -23,12 +23,14 @@
     {% else %}
         <p>Usuário não encontrado.</p>
     {% endif %}
-    
+    <hr>
     <h2>Alterar Senha</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Alterar Senha</button>
+            <div class="form-submit">
+                <button class="btn btn-outline-secondary" type="submit">Alterar Senha</button>
+            </div>
     </form>
 </div>    
    

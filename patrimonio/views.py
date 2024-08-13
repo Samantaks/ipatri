@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ItensCadastroForm, ItemSearchForm, EditItemSetorForm
-from .models import Item
-from usuario.models import Setor
+from .models import Item, Alocacao
+from django.utils import timezone
+from usuario.models import Usuario
 
 
 @login_required(login_url='login-page')
@@ -43,8 +44,6 @@ def itemcadastro(request):
 
             return render(request, "app/itens_cadastro.html", context=context)
 
-        context = {'form': form}
-
         return render(request, "app/itens_cadastro.html", context=context)
 
     return render(request, "app/itens_cadastro.html", context=context)
@@ -76,7 +75,23 @@ def itemmov(request):
         item = get_object_or_404(Item, pk=item_id)
         edit_form = EditItemSetorForm(request.POST, instance=item)
         if edit_form.is_valid():
+            # Salva a alteração no setor do item
             edit_form.save()
+
+            # Busca o usuário na tabela Usuario, baseado no usuário logado
+            usuario = Usuario.objects.get(email=request.user.email)
+
+            # Captura a data e hora da movimentação informada pelo usuário
+            dataalocacao = edit_form.cleaned_data['dataalocacao']
+
+            # Cria uma nova instância de Alocacao para registrar a movimentação
+            Alocacao.objects.create(
+                item_idpatrimonio=item,
+                dataalocacao=dataalocacao,  # Usa a data e hora informada pelo usuário
+                user=usuario  # Registrar o usuário que fez a movimentação
+            )
+
+            # Reseta os formulários
             edit_form = None
             item = None
             search_form = ItemSearchForm()

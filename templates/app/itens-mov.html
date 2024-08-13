@@ -38,12 +38,16 @@
         {% csrf_token %}
         <input type="hidden" name="item_id" value="{{ item.idpatrimonio }}">
         {{ edit_form.as_p }}
-        <button type="submit">Salvar</button>
+        <div class="form-submit">
+            <button class="btn btn-outline-secondary" type="submit">Salvar</button>
+        </div>
     </form>
     
 {% elif item_searched %}
     <p>Nenhum item encontrado com esse tombo.</p>
 {% endif %}
+<hr>
+
 </div>    
    
 {% endblock %}

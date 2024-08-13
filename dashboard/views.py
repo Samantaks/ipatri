@@ -1,4 +1,3 @@
-import xlwt
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -9,6 +8,13 @@ from django.http import JsonResponse
 from django.db.models import Sum
 from collections import Counter
 from .forms import ItemSearchForm
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.platypus import Image as ReportLabImage
+import xlwt
 
 
 @login_required(login_url='login-page')
@@ -160,6 +166,73 @@ def export_estoque_xls(request):
                 ws.write(row_num, 5, item.notafiscal, font_style)
 
             wb.save(response)
+            return response
+
+        except Usuario.DoesNotExist:
+            return render(request, 'app/erro.html', {'mensagem': 'Usuário não encontrado.'})
+
+    return HttpResponse("Usuário não autenticado.", status=401)
+
+
+def export_estoque_pdf(request):
+    if request.user.is_authenticated:
+        try:
+            # Recupera o setor do usuário autenticado
+            usuario = Usuario.objects.get(email=request.user.email)
+            setor = usuario.setor_id_setor
+            itens = Item.objects.filter(setor_id_setor=setor)
+
+            # Configura a resposta HTTP para gerar o PDF
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="estoque.pdf"'
+
+            # Configura o documento PDF
+            doc = SimpleDocTemplate(response, pagesize=A4)
+            elements = []
+
+            # Estilos de texto
+            styles = getSampleStyleSheet()
+            title_style = styles['Title']
+            normal_style = styles['Normal']
+
+            # Adiciona o título do documento
+            elements.append(Paragraph("Relatório de Estoque", title_style))
+            elements.append(Paragraph(f"Setor: {setor.setor_abrev}", normal_style))
+            elements.append(Paragraph(f"Gerado por: {request.user.username}", normal_style))
+            elements.append(Paragraph(" ", normal_style))  # Espaço em branco
+
+            # Adiciona uma tabela com os dados dos itens
+            data = [['Item Tombo', 'Item Nome', 'Marca', 'Data da Compra',
+                     'Preço', 'Nota Fiscal']]
+
+            for item in itens:
+                data.append([
+                    item.tombo,
+                    item.itemnome,
+                    item.marca,
+                    item.datacompra,
+                    item.valorcompra,
+                    item.notafiscal,
+
+                ])
+
+            # Configura a tabela
+            table = Table(data)
+            table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 10),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ]))
+
+            elements.append(table)
+
+            doc.build(elements)
+
             return response
 
         except Usuario.DoesNotExist:

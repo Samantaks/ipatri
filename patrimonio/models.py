@@ -1,5 +1,17 @@
 from django.db import models
-from usuario.models import Setor
+from usuario.models import Setor, Usuario
+
+
+class Alocacao(models.Model):
+    idalocacao = models.AutoField(primary_key=True)
+    dataalocacao = models.DateTimeField(blank=True, null=True)
+    item_idpatrimonio = models.ForeignKey('Item', models.DO_NOTHING, db_column='item_idpatrimonio',
+                                          verbose_name='usuario', related_name='Alocacao')
+    user = models.ForeignKey(Usuario, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'alocacao'
 
 
 class Contacontabil(models.Model):

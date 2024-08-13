@@ -84,9 +84,15 @@ class ItemSearchForm(forms.Form):
 
 
 class EditItemSetorForm(forms.ModelForm):
+    dataalocacao = forms.DateTimeField(
+        label='Data e Hora da Movimentação',
+        widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+        required=True
+    )
+
     class Meta:
         model = Item
-        fields = ['setor_id_setor']
+        fields = ['setor_id_setor', 'dataalocacao']  # Inclui o campo dataalocacao
         labels = {
             'setor_id_setor': 'Novo Setor',
         }
