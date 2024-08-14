@@ -15,32 +15,55 @@
 <div class="inside-box">
 <h1>Itens patrimôniais do seu Setor</h1>
 <br>
-    <table>
-        <thead>
-            <tr>
-                <th class="item-tombo">Tombo</th>
-                <th class="item-nome">Nome do Item</th>
-                <th class="item-marca">Marca</th>
-                <th class="item-data">Data de Compra</th>
-                <th class="item-valor">Valor de Compra</th>
-                <th class="item-nota">Nota Fiscal</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in itens %}
-            <tr>
-                <td>{{ item.tombo }}</td>
-                <td>{{ item.itemnome }}</td>
-                <td>{{ item.marca }}</td>
-                <td>{{ item.datacompra }}</td>
-                <td> R$ {{ item.valorcompra }}</td>
-                <td>{{ item.notafiscal }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p><a href="{% url 'export_estoque_xls' %}">Exportar Estoque para XLS</a></p>
-    <p><a href="{% url 'export_estoque_pdf' %}">Exportar Estoque para PDF</a></p>
+<table>
+    <thead>
+        <tr>
+            <th class="item-tombo">Tombo</th>
+            <th class="item-nome">Nome do Item</th>
+            <th class="item-marca">Marca</th>
+            <th class="item-data">Data de Compra</th>
+            <th class="item-valor">Valor de Compra</th>
+            <th class="item-nota">Nota Fiscal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in page_obj %}
+        <tr>
+            <td>{{ item.tombo }}</td>
+            <td>{{ item.itemnome }}</td>
+            <td>{{ item.marca }}</td>
+            <td>{{ item.datacompra }}</td>
+            <td>R$ {{ item.valorcompra }}</td>
+            <td>{{ item.notafiscal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="rodape">
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1"><i class="bi bi-chevron-double-left"></i></a>
+            <a href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a>
+        {% endif %}
+    </span>
+<br>
+<hr>
+
+</div>
+    <p><a href="{% url 'export_estoque_xls' %}"><i class="bi bi-filetype-xml"></i></a></p>
+    <p><a href="{% url 'export_estoque_pdf' %}"><i class="bi bi-filetype-pdf"></i></a></p>
+
+</div>
 
 </div>    
    

@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from patrimonio.models import Item
 from usuario.models import Usuario, Setor
@@ -11,9 +12,7 @@ from .forms import ItemSearchForm
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import inch
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
-from reportlab.platypus import Image as ReportLabImage
 import xlwt
 
 
@@ -42,19 +41,29 @@ def localizacao(request):
 def estoque(request):
     if request.user.is_authenticated:
         try:
-            # Assume que o email do usuário autenticado é único
             usuario = Usuario.objects.get(email=request.user.email)
             setor = usuario.setor_id_setor
             itens = Item.objects.filter(setor_id_setor=setor)
-            context = {
-                'itens': itens
-            }
-        except Usuario.DoesNotExist:
 
+            # Configura o paginator para mostrar 10 itens por página
+            paginator = Paginator(itens, 10)
+
+            # Pega o número da página atual
+            page_number = request.GET.get('page')
+
+            # Pega os itens da página atual
+            page_obj = paginator.get_page(page_number)
+
+            context = {
+                'page_obj': page_obj  # Substitua 'itens' por 'page_obj' no contexto
+            }
+
+        except Usuario.DoesNotExist:
             return render(request, 'app/erro.html', {'mensagem': 'Usuário não encontrado.'})
+
         return render(request, 'app/estoque.html', context)
     else:
-        return render(request, 'app/estoque.html', {'itens': []})
+        return render(request, 'app/estoque.html', {'page_obj': []})
 
 # Dashboard e Views de itens no Dashboard:
 
