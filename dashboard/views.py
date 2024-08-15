@@ -157,7 +157,7 @@ def export_estoque_xls(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
 
-            columns = ['Item Tombo', 'Item Nome', 'Marca', 'Data de Compra', 'Preço', 'Nota Fiscal']
+            columns = [ 'Nome', 'Marca', 'Nota Fiscal', 'Data de Compra', 'Preço', 'Tombo']
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)
@@ -167,12 +167,12 @@ def export_estoque_xls(request):
 
             for item in itens:
                 row_num += 1
-                ws.write(row_num, 0, item.tombo, font_style)
-                ws.write(row_num, 1, item.itemnome, font_style)
-                ws.write(row_num, 2, item.marca, font_style)
+                ws.write(row_num, 0, item.itemnome, font_style)
+                ws.write(row_num, 1, item.marca, font_style)
+                ws.write(row_num, 2, item.notafiscal, font_style)
                 ws.write(row_num, 3, item.datacompra, font_style)
                 ws.write(row_num, 4, item.valorcompra, font_style)
-                ws.write(row_num, 5, item.notafiscal, font_style)
+                ws.write(row_num, 5, item.tombo, font_style)
 
             wb.save(response)
             return response
@@ -211,17 +211,17 @@ def export_estoque_pdf(request):
             elements.append(Paragraph(" ", normal_style))  # Espaço em branco
 
             # Adiciona uma tabela com os dados dos itens
-            data = [['Item Tombo', 'Item Nome', 'Marca', 'Data da Compra',
-                     'Preço', 'Nota Fiscal']]
+            data = [[ 'Nome', 'Marca','Nota Fiscal', 'Data da Compra',
+                     'Preço', 'Item Tombo']]
 
             for item in itens:
                 data.append([
-                    item.tombo,
                     item.itemnome,
                     item.marca,
+                    item.notafiscal,
                     item.datacompra,
                     item.valorcompra,
-                    item.notafiscal,
+                    item.tombo,
 
                 ])
 

@@ -7,9 +7,10 @@ class Setor(models.Model):
     orgao_full = models.CharField(max_length=200, db_collation='utf8mb3_general_ci', blank=True, null=True)
     setor_full = models.CharField(max_length=200, db_collation='utf8mb3_general_ci', blank=True, null=True)
     orgao_abrev = models.CharField(max_length=15, db_collation='utf8mb3_general_ci', blank=True, null=True)
+    responsavel_setor = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.setor_abrev} - {self.orgao_abrev}"
+        return f"{self.setor_abrev} - {self.orgao_abrev} | {self.responsavel_setor}"
 
     class Meta:
         managed = False

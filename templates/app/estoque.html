@@ -17,24 +17,24 @@
 <br>
 <table>
     <thead>
-        <tr>
-            <th class="item-tombo">Tombo</th>
+        <tr> 
             <th class="item-nome">Nome do Item</th>
             <th class="item-marca">Marca</th>
+            <th class="item-nota">Nota Fiscal</th>
             <th class="item-data">Data de Compra</th>
             <th class="item-valor">Valor de Compra</th>
-            <th class="item-nota">Nota Fiscal</th>
+            <th class="item-tombo">Tombo</th>
         </tr>
     </thead>
     <tbody>
         {% for item in page_obj %}
-        <tr>
-            <td>{{ item.tombo }}</td>
+        <tr> 
             <td>{{ item.itemnome }}</td>
             <td>{{ item.marca }}</td>
+            <td>{{ item.notafiscal }}</td>
             <td>{{ item.datacompra }}</td>
             <td>R$ {{ item.valorcompra }}</td>
-            <td>{{ item.notafiscal }}</td>
+            <td>{{ item.tombo }}</td>
         </tr>
         {% endfor %}
     </tbody>
