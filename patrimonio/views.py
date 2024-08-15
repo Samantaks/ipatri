@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ItensCadastroForm, ItemSearchForm, EditItemSetorForm
 from .models import Item, Alocacao
+from django.core.paginator import Paginator
 from django.utils import timezone
-from usuario.models import Usuario
+from usuario.models import Usuario,Setor
 
 
 @login_required(login_url='login-page')
@@ -47,11 +48,6 @@ def itemcadastro(request):
         return render(request, "app/itens_cadastro.html", context=context)
 
     return render(request, "app/itens_cadastro.html", context=context)
-
-
-@login_required(login_url='login-page')
-def itemvisita(request):
-    return render(request, "app/itens-visita.html")
 
 
 @login_required(login_url='login-page')
@@ -103,3 +99,17 @@ def itemmov(request):
         'item_searched': item_searched,
     }
     return render(request, 'app/itens-mov.html', context)
+
+
+@login_required(login_url='login-page')
+def itemvisita(request):
+
+    itens = Item.objects.filter(datacompra__lte=timezone.now()).order_by('datacompra')
+    paginator = Paginator(itens, 5)   
+    page_number = request.GET.get('page')        
+    page_obj = paginator.get_page(page_number)
+    context = {
+                'page_obj': page_obj  
+            }
+
+    return render(request, "app/itens-visita.html", context)

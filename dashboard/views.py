@@ -118,7 +118,8 @@ def relatorio_marcas(request):
     z = list(zip(labels, data))
     z.sort(key=lambda item: item[1], reverse=True)
     z = list(zip(*z))
-    return JsonResponse({'labels': z[0][:3], 'data': z[1][:3]})
+    data_jsn = {'labels': z[0][:3], 'data': z[1][:3]}
+    return JsonResponse(data_jsn)
 
 
 @login_required(login_url='login-page')
