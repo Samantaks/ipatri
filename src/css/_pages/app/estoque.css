@@ -5,7 +5,7 @@ table {
 
 th, td {
     padding: 10px 15px; /* Adiciona espaço interno (padding) para as células */
-    text-align: left; /* Alinha o texto à esquerda */
+    text-align: center; 
 }
 
 th {
@@ -45,4 +45,18 @@ th:nth-child(6), td:nth-child(6) {
     text-align: left;
 }
 
+.link-rodape{
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
 
+.paginacao{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.exportar{
+    display: flex;
+    justify-content: flex-start;
+    gap: 2vh;
+}

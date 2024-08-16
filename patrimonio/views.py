@@ -103,13 +103,30 @@ def itemmov(request):
 
 @login_required(login_url='login-page')
 def itemvisita(request):
-
+    # Primeira parte da View - Listagem geral dos itens
     itens = Item.objects.filter(datacompra__lte=timezone.now()).order_by('datacompra')
-    paginator = Paginator(itens, 5)   
+    paginatorgeral = Paginator(itens, 5)   
     page_number = request.GET.get('page')        
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginatorgeral.get_page(page_number)
+
+    # Segunda parte da View - Busca de item por tombo
+    form = ItemSearchForm()
+    itens_buscados = None
+    item_searched = False
+    visita_list = []
+
+    if request.method == 'GET' and 'tombo' in request.GET:
+        form = ItemSearchForm(request.GET)
+        if form.is_valid():
+            tombo = form.cleaned_data['tombo']
+            itens_buscados = Item.objects.filter(tombo=tombo).first()
+            item_searched = True
+
     context = {
-                'page_obj': page_obj  
-            }
+        'page_obj': page_obj,
+        'form': form,
+        'item_searched': item_searched,
+        'itens_buscados': itens_buscados
+    }
 
     return render(request, "app/itens-visita.html", context)
