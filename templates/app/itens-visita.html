@@ -44,12 +44,14 @@
     </thead>
     <tbody>
             <tr> 
-                {% if itens_buscados %}
-                    <td>{{ itens_buscados.tombo }}</td>
-                    <td>{{ itens_buscados.itemnome }}</td>
-                    <td>{{ itens_buscados.descricao }}</td>
-                    <td>{{ itens_buscados.setor_id_setor }}</td>
-                {% endif %}
+                {% for item in visita_list %}
+        <tr>
+            <td>{{ item.tombo }}</td>
+            <td>{{ item.itemnome }}</td>
+            <td>{{ item.descricao }}</td>
+            <td>{{ item.setor_id_setor }}</td>
+        </tr>
+        {% endfor %}    
             </tr>
     </tbody>
 </table>

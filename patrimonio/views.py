@@ -105,28 +105,34 @@ def itemmov(request):
 def itemvisita(request):
     # Primeira parte da View - Listagem geral dos itens
     itens = Item.objects.filter(datacompra__lte=timezone.now()).order_by('datacompra')
-    paginatorgeral = Paginator(itens, 5)   
-    page_number = request.GET.get('page')        
+    paginatorgeral = Paginator(itens, 5)
+    page_number = request.GET.get('page')
     page_obj = paginatorgeral.get_page(page_number)
 
     # Segunda parte da View - Busca de item por tombo
     form = ItemSearchForm()
-    itens_buscados = None
-    item_searched = False
-    visita_list = []
+    visita_list = request.session.get('visita_list', [])  # Recupera a lista de tombos da sessão
+    searched = False
 
     if request.method == 'GET' and 'tombo' in request.GET:
         form = ItemSearchForm(request.GET)
         if form.is_valid():
             tombo = form.cleaned_data['tombo']
-            itens_buscados = Item.objects.filter(tombo=tombo).first()
-            item_searched = True
+            item = Item.objects.filter(tombo=tombo).first()
+            searched = True
+
+            if item and item.tombo not in visita_list:
+                visita_list.append(item.tombo)  # Armazene apenas o tombo na lista
+                request.session['visita_list'] = visita_list  # Atualiza a sessão com a nova lista
+
+    # Recupera os objetos Item com base nos tombos armazenados na sessão
+    itens_buscados = Item.objects.filter(tombo__in=visita_list)
 
     context = {
         'page_obj': page_obj,
         'form': form,
-        'item_searched': item_searched,
-        'itens_buscados': itens_buscados
+        'searched': searched,
+        'visita_list': itens_buscados  # Passa os itens buscados para o template
     }
 
     return render(request, "app/itens-visita.html", context)
