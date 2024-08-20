@@ -71,7 +71,7 @@ class Item(models.Model):
 
 
 class Visita(models.Model):
-    idvisita = models.IntegerField(primary_key=True)
+    idvisita = models.AutoField(primary_key=True)
     datavisita = models.DateField(blank=True, null=True)
     setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor')
     tombos_visita = models.TextField(blank=True, null=True)

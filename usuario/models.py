@@ -10,7 +10,7 @@ class Setor(models.Model):
     responsavel_setor = models.CharField(max_length=200)
 
     def __str__(self):
-        return f"{self.setor_abrev} - {self.orgao_abrev} | {self.responsavel_setor}"
+        return f"{self.setor_abrev} | {self.responsavel_setor}"
 
     class Meta:
         managed = False

@@ -128,7 +128,7 @@ def itemvisita(request):
                     'tombo': item.tombo,
                     'itemnome': item.itemnome,
                     'descricao': item.descricao,
-                    'setor_id_setor': item.setor_id_setor.setor_abrev  # Supondo que setor_id_setor seja o nome do setor
+                    'setor_id_setor': item.setor_id_setor.setor_abrev  # Setor abreviado
                 })
                 request.session['visita_list'] = visita_list
             searched = True
@@ -136,15 +136,31 @@ def itemvisita(request):
     # Salvamento da busca na model Visita
     if request.method == 'POST':
         if 'salvar_visita' in request.POST:
+            # Lógica para determinar o setor mais frequente
+            setor_counter = {}
+            for visita in visita_list:
+                setor = visita['setor_id_setor']
+                if setor in setor_counter:
+                    setor_counter[setor] += 1
+                else:
+                    setor_counter[setor] = 1
+
+            # Encontra o setor com a maior contagem
+            setor_mais_frequente = max(setor_counter, key=setor_counter.get)
+            setor_obj = Setor.objects.get(setor_abrev=setor_mais_frequente)
+
+            # Obter instância de Usuario correspondente ao usuário autenticado
+            usuario_obj = Usuario.objects.get(email=request.user.email)
+
             Visita.objects.create(
-                setor_id_setor=request.user.setor,  # Supondo que o usuário tenha um setor associado
-                tombos_buscados=json.dumps(visita_list),
-                user=request.user  # Associando a visita ao usuário atual
+                setor_id_setor=setor_obj,  # Associando ao setor predominante
+                tombos_visita=json.dumps(visita_list),  # Corrigido o campo para tombos_visita
+                visita_usuario=usuario_obj  # Associando a visita ao usuário atual
             )
             # Limpa a lista após salvar
             request.session['visita_list'] = []
             visita_list = []
-        
+
         elif 'limpar_busca' in request.POST:
             # Limpa a lista quando o botão "Limpar" é clicado
             request.session['visita_list'] = []
