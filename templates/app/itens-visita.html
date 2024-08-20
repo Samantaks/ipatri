@@ -51,11 +51,16 @@
             <td>{{ item.descricao }}</td>
             <td>{{ item.setor_id_setor }}</td>
         </tr>
-        {% endfor %}    
+            {% endfor %}    
             </tr>
     </tbody>
 </table>
 
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" name="salvar_visita" class="btn btn-success">Salvar Visita</button>
+    <button type="submit" name="limpar_busca" class="btn btn-danger">Limpar</button>
+</form>
 
 <hr>
 

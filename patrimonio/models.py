@@ -68,3 +68,15 @@ class Item(models.Model):
     class Meta:
         managed = False
         db_table = 'item'
+
+
+class Visita(models.Model):
+    idvisita = models.IntegerField(primary_key=True)
+    datavisita = models.DateField(blank=True, null=True)
+    setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor')
+    tombos_visita = models.TextField(blank=True, null=True)
+    visita_usuario = models.ForeignKey(Usuario, models.DO_NOTHING, db_column='visita_usuario', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'visita'

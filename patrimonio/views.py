@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ItensCadastroForm, ItemSearchForm, EditItemSetorForm
-from .models import Item, Alocacao
+from .models import Item, Alocacao, Visita
 from django.core.paginator import Paginator
 from django.utils import timezone
+from django.http import JsonResponse
 from usuario.models import Usuario,Setor
+import json
 
 
 @login_required(login_url='login-page')
@@ -111,28 +113,48 @@ def itemvisita(request):
 
     # Segunda parte da View - Busca de item por tombo
     form = ItemSearchForm()
-    visita_list = request.session.get('visita_list', [])  # Recupera a lista de tombos da sessão
     searched = False
+
+    # Obter a lista de tombos armazenados na sessão
+    visita_list = request.session.get('visita_list', [])
 
     if request.method == 'GET' and 'tombo' in request.GET:
         form = ItemSearchForm(request.GET)
         if form.is_valid():
             tombo = form.cleaned_data['tombo']
             item = Item.objects.filter(tombo=tombo).first()
+            if item:
+                visita_list.append({
+                    'tombo': item.tombo,
+                    'itemnome': item.itemnome,
+                    'descricao': item.descricao,
+                    'setor_id_setor': item.setor_id_setor.setor_abrev  # Supondo que setor_id_setor seja o nome do setor
+                })
+                request.session['visita_list'] = visita_list
             searched = True
 
-            if item and item.tombo not in visita_list:
-                visita_list.append(item.tombo)  # Armazene apenas o tombo na lista
-                request.session['visita_list'] = visita_list  # Atualiza a sessão com a nova lista
-
-    # Recupera os objetos Item com base nos tombos armazenados na sessão
-    itens_buscados = Item.objects.filter(tombo__in=visita_list)
+    # Salvamento da busca na model Visita
+    if request.method == 'POST':
+        if 'salvar_visita' in request.POST:
+            Visita.objects.create(
+                setor_id_setor=request.user.setor,  # Supondo que o usuário tenha um setor associado
+                tombos_buscados=json.dumps(visita_list),
+                user=request.user  # Associando a visita ao usuário atual
+            )
+            # Limpa a lista após salvar
+            request.session['visita_list'] = []
+            visita_list = []
+        
+        elif 'limpar_busca' in request.POST:
+            # Limpa a lista quando o botão "Limpar" é clicado
+            request.session['visita_list'] = []
+            visita_list = []
 
     context = {
         'page_obj': page_obj,
         'form': form,
         'searched': searched,
-        'visita_list': itens_buscados  # Passa os itens buscados para o template
+        'visita_list': visita_list
     }
 
     return render(request, "app/itens-visita.html", context)
