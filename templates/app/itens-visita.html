@@ -4,7 +4,7 @@
 
 {% block customStyle %} 
     
-    <link rel="stylesheet" href="{% static 'css/_pages/app/itens.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/_pages/app/item-visita.css' %}" type="text/css">
 {% endblock %}
 
 {% block customJs %}
@@ -18,12 +18,11 @@
     <h1>Busca de Item por Tombo</h1>
         <br>
         <form method="GET">
-        <div class="form-box">    
-                    
-                {{ form }}
-            
-            <div class="form-submit">
-                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search" width="20px"></i></button>
+            <label for="{{ form.tombo.id_for_label }}"> Tombo no setor: </label>
+        <div class="form-box">
+            <div class="form-submit">        
+                {{ form.tombo }}
+                <button class="btn btn-outline-secondary" type="submit"> Buscar </button>
             </div>
         </div>    
         </form>
@@ -56,12 +55,13 @@
     </tbody>
 </table>
 
+<div class="justify-content-evenly">
 <form method="post">
     {% csrf_token %}
-    <button type="submit" name="salvar_visita" class="btn btn-success">Salvar Visita</button>
-    <button type="submit" name="limpar_busca" class="btn btn-danger">Limpar</button>
+    <button type="submit" name="salvar_visita" class="btn btn-outline-success">Salvar Visita</button>
+    <button type="submit" name="limpar_busca" class="btn btn-outline-danger">Limpar</button>
 </form>
-
+</div>
 <hr>
 
     <h1>Almoxarifado:</h1>

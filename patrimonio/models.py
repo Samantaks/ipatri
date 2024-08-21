@@ -5,6 +5,7 @@ from usuario.models import Setor, Usuario
 class Alocacao(models.Model):
     idalocacao = models.AutoField(primary_key=True)
     dataalocacao = models.DateTimeField(blank=True, null=True)
+    estado = models.CharField(max_length=50, blank=True, null=True)
     item_idpatrimonio = models.ForeignKey('Item', models.DO_NOTHING, db_column='item_idpatrimonio',
                                           verbose_name='usuario', related_name='Alocacao')
     user = models.ForeignKey(Usuario, models.DO_NOTHING)
@@ -20,7 +21,7 @@ class Contacontabil(models.Model):
     descricaocc = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.idcontacontabil} - {self.nomecc}'
+        return f'{self.nomecc}'
 
     class Meta:
         managed = False
@@ -29,15 +30,14 @@ class Contacontabil(models.Model):
 
 class Depreciacao(models.Model):
     iddepreciacao = models.AutoField(primary_key=True)
-    nometipodepreciacao = models.CharField(max_length=200, blank=True, null=True)
-    valordepreciado = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
-    estado = models.CharField(max_length=100, blank=True, null=True)
-    natureza = models.CharField(max_length=100, blank=True, null=True)
+    nometipodepreciacao = models.CharField(max_length=100)
+    vidautil = models.IntegerField(db_column='VidaUtil', blank=True, null=True)  # Field name made lowercase.
+    taxaanual = models.IntegerField(db_column='TaxaAnual')  # Field name made lowercase.
     contacontabil_idcontacontabil = models.ForeignKey(Contacontabil,
                                                       models.DO_NOTHING, db_column='contacontabil_idcontacontabil')
 
     def __str__(self):
-        return f'{self.iddepreciacao} - {self.nometipodepreciacao}'
+        return f' {self.nometipodepreciacao} para {self.contacontabil_idcontacontabil}'
 
     class Meta:
         managed = False

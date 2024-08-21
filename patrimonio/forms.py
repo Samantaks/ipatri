@@ -90,11 +90,20 @@ class EditItemSetorForm(forms.ModelForm):
         required=True
     )
 
+    estado = forms.CharField(
+        label='Estado do item',
+        max_length=50,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = Item
-        fields = ['setor_id_setor', 'dataalocacao']  # Inclui o campo dataalocacao
+        fields = ['setor_id_setor', 'dataalocacao', 'estado']  # Inclui o campo estado
         labels = {
             'setor_id_setor': 'Novo Setor',
+            'dataalocacao': 'Data e Hora da Movimentação',
+            'estado': 'Estado',
         }
         widgets = {
             'setor_id_setor': forms.Select(attrs={'class': 'form-control'}),

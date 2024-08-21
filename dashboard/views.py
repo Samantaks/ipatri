@@ -43,7 +43,8 @@ def estoque(request):
         try:
             usuario = Usuario.objects.get(email=request.user.email)
             setor = usuario.setor_id_setor
-            itens = Item.objects.filter(setor_id_setor=setor)
+            # Ordena os itens pela data de compra, do mais recente para o mais antigo
+            itens = Item.objects.filter(setor_id_setor=setor).order_by('-datacompra')
 
             # Configura o paginator para mostrar 10 itens por página
             paginator = Paginator(itens, 10)
@@ -55,7 +56,8 @@ def estoque(request):
             page_obj = paginator.get_page(page_number)
 
             context = {
-                'page_obj': page_obj  # Substitua 'itens' por 'page_obj' no contexto
+                'page_obj': page_obj,
+                'nome_setor': setor.setor_full  # Passa o nome completo do setor para o template
             }
 
         except Usuario.DoesNotExist:
@@ -67,9 +69,20 @@ def estoque(request):
 
 # Dashboard e Views de itens no Dashboard:
 
+
 @login_required(login_url='login-page')
 def dashboardpage(request):
-    return render(request, "app/dashboard.html")
+    if request.user.is_authenticated:
+        try:
+            usuario = Usuario.objects.get(email=request.user.email)
+            setor = usuario.setor_id_setor
+            context = {
+                'orgao': setor.orgao_abrev
+            }
+            return render(request, "app/dashboard.html", context=context)
+
+        except Usuario.DoesNotExist:
+            return render(request, "app/dashboard.html")
 
 
 @login_required(login_url='login-page')
@@ -158,7 +171,7 @@ def export_estoque_xls(request):
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
 
-            columns = [ 'Nome', 'Marca', 'Nota Fiscal', 'Data de Compra', 'Preço', 'Tombo']
+            columns = ['Nome', 'Marca', 'Nota Fiscal', 'Data de Compra', 'Preço', 'Tombo']
 
             for col_num in range(len(columns)):
                 ws.write(row_num, col_num, columns[col_num], font_style)
@@ -212,7 +225,7 @@ def export_estoque_pdf(request):
             elements.append(Paragraph(" ", normal_style))  # Espaço em branco
 
             # Adiciona uma tabela com os dados dos itens
-            data = [[ 'Nome', 'Marca','Nota Fiscal', 'Data da Compra',
+            data = [['Nome', 'Marca', 'Nota Fiscal', 'Data da Compra',
                      'Preço', 'Item Tombo']]
 
             for item in itens:

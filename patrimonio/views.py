@@ -5,7 +5,7 @@ from .models import Item, Alocacao, Visita
 from django.core.paginator import Paginator
 from django.utils import timezone
 from django.http import JsonResponse
-from usuario.models import Usuario,Setor
+from usuario.models import Usuario, Setor
 import json
 
 
@@ -81,11 +81,13 @@ def itemmov(request):
 
             # Captura a data e hora da movimentação informada pelo usuário
             dataalocacao = edit_form.cleaned_data['dataalocacao']
+            estadoitem = edit_form.cleaned_data['estado']
 
             # Cria uma nova instância de Alocacao para registrar a movimentação
             Alocacao.objects.create(
                 item_idpatrimonio=item,
                 dataalocacao=dataalocacao,  # Usa a data e hora informada pelo usuário
+                estado=estadoitem,
                 user=usuario  # Registrar o usuário que fez a movimentação
             )
 
@@ -136,7 +138,6 @@ def itemvisita(request):
     # Salvamento da busca na model Visita
     if request.method == 'POST':
         if 'salvar_visita' in request.POST:
-            # Lógica para determinar o setor mais frequente
             setor_counter = {}
             for visita in visita_list:
                 setor = visita['setor_id_setor']
@@ -144,12 +145,10 @@ def itemvisita(request):
                     setor_counter[setor] += 1
                 else:
                     setor_counter[setor] = 1
-
             # Encontra o setor com a maior contagem
             setor_mais_frequente = max(setor_counter, key=setor_counter.get)
             setor_obj = Setor.objects.get(setor_abrev=setor_mais_frequente)
 
-            # Obter instância de Usuario correspondente ao usuário autenticado
             usuario_obj = Usuario.objects.get(email=request.user.email)
 
             Visita.objects.create(
