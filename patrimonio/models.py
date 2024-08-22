@@ -30,9 +30,9 @@ class Contacontabil(models.Model):
 
 class Depreciacao(models.Model):
     iddepreciacao = models.AutoField(primary_key=True)
-    nometipodepreciacao = models.CharField(max_length=100)
-    vidautil = models.IntegerField(db_column='VidaUtil', blank=True, null=True)  # Field name made lowercase.
-    taxaanual = models.IntegerField(db_column='TaxaAnual')  # Field name made lowercase.
+    nometipodepreciacao = models.CharField(max_length=200, blank=True, null=True)
+    vidautil = models.IntegerField(blank=True, null=True)
+    taxaanual = models.IntegerField(blank=True, null=True)
     contacontabil_idcontacontabil = models.ForeignKey(Contacontabil,
                                                       models.DO_NOTHING, db_column='contacontabil_idcontacontabil')
 
@@ -42,6 +42,16 @@ class Depreciacao(models.Model):
     class Meta:
         managed = False
         db_table = 'depreciacao'
+
+
+class Estado(models.Model):
+    idestado = models.IntegerField(primary_key=True)
+    tipoestado = models.CharField(max_length=45)
+    descricaoestado = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'estado'
 
 
 # Create your models here.
@@ -55,10 +65,10 @@ class Item(models.Model):
     datacompra = models.DateField(blank=True, null=True)
     valorcompra = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     notafiscal = models.IntegerField(blank=True, null=True)
+    estado_idestado = models.ForeignKey(Estado, models.DO_NOTHING, db_column='estado_idestado')
     depreciacao_iddepreciacao1 = models.ForeignKey(Depreciacao, models.DO_NOTHING,
                                                    db_column='depreciacao_iddepreciacao1', blank=True, null=True)
-    setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING,
-                                       db_column='setor_id_setor', blank=True, null=True)
+    setor_id_setor = models.ForeignKey(Setor, models.DO_NOTHING, db_column='setor_id_setor', blank=True, null=True)
     contacontabil_idcontacontabil = models.ForeignKey(Contacontabil, models.DO_NOTHING,
                                                       db_column='contacontabil_idcontacontabil', blank=True, null=True)
 

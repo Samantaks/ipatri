@@ -1,16 +1,20 @@
 from django import forms
-from .models import Depreciacao, Item, Contacontabil
+from .models import Depreciacao, Item, Contacontabil,Estado
 from usuario.models import Setor
 
 
 class ItensCadastroForm(forms.Form):
     @staticmethod
+    def get_contacontabil_queryset():
+        return Contacontabil.objects.all()
+
+    @staticmethod
     def get_depreciacao_queryset():
         return Depreciacao.objects.all()
 
     @staticmethod
-    def get_contacontabil_queryset():
-        return Contacontabil.objects.all()
+    def get_estado_queryset():
+        return Estado.objects.all()
 
     @staticmethod
     def get_setor_queryset():
@@ -31,6 +35,15 @@ class ItensCadastroForm(forms.Form):
         widget=forms.Textarea(attrs={'placeholder': 'Descreva o item'}),
         required=False
     )
+
+    ItemEstado = forms.ModelChoiceField(
+        label="Estado do patrimônio:",
+        queryset=get_estado_queryset(),
+        empty_label="...",
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Selecione o estado'})
+    )
+
     ItemMarca = forms.CharField(
         label="Marca:",
         max_length=200,
@@ -56,6 +69,15 @@ class ItensCadastroForm(forms.Form):
         label="NF:",
         widget=forms.NumberInput(attrs={'placeholder': 'Digite o número da nota fiscal'})
     )
+
+    ItemSetor = forms.ModelChoiceField(
+        label="Setor de Origem do patrimônio:",
+        queryset=get_setor_queryset(),
+        empty_label="...",
+        required=True,
+        widget=forms.Select(attrs={'placeholder': 'Selecione o setor'})
+    )
+
     ItemDepreciacao = forms.ModelChoiceField(
         label="Tipo de Depreciação",
         queryset=get_depreciacao_queryset(),
@@ -70,13 +92,7 @@ class ItensCadastroForm(forms.Form):
         required=True,
         widget=forms.Select(attrs={'placeholder': 'Selecione a conta contábil'})
     )
-    ItemSetor = forms.ModelChoiceField(
-        label="Setor de Origem do patrimônio:",
-        queryset=get_setor_queryset(),
-        empty_label="...",
-        required=True,
-        widget=forms.Select(attrs={'placeholder': 'Selecione o setor'})
-    )
+
 
 
 class ItemSearchForm(forms.Form):
