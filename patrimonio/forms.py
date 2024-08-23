@@ -1,5 +1,5 @@
 from django import forms
-from .models import Depreciacao, Item, Contacontabil,Estado
+from .models import Depreciacao, Item, Contacontabil, Estado
 from usuario.models import Setor
 
 
@@ -100,17 +100,23 @@ class ItemSearchForm(forms.Form):
 
 
 class EditItemSetorForm(forms.ModelForm):
+
+    @staticmethod
+    def get_estado_queryset():
+        return Estado.objects.all()
+
     dataalocacao = forms.DateTimeField(
         label='Data e Hora da Movimentação',
         widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
         required=True
     )
 
-    estado = forms.CharField(
+    estado = forms.ModelChoiceField(
         label='Estado do item',
-        max_length=50,
+        queryset=get_estado_queryset(),
+        empty_label="...",
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
     class Meta:

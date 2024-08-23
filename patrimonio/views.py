@@ -24,11 +24,13 @@ def itemcadastro(request):
             new_item_descricao = form.cleaned_data['ItemDescricao']
             new_item_marca = form.cleaned_data['ItemMarca']
             new_item_preco = form.cleaned_data['ItemPreco']
+            new_item_estado = form.cleaned_data['ItemEstado']
             new_item_ano = form.cleaned_data['ItemAno']
             new_item_data = form.cleaned_data['ItemData']
             new_item_notafiscal = form.cleaned_data['ItemNotaFiscal']
             new_item_depreciacao = form.cleaned_data['ItemDepreciacao']
             new_item_setor = form.cleaned_data['ItemSetor']
+            new_item_cc = form.cleaned_data['ItemCC']
 
             new_item_salvo = Item(
                 descricao=new_item_descricao,
@@ -40,7 +42,9 @@ def itemcadastro(request):
                 itemnome=new_item_nome,
                 itemano=new_item_ano,
                 depreciacao_iddepreciacao1=new_item_depreciacao,
-                setor_id_setor=new_item_setor
+                setor_id_setor=new_item_setor,
+                estado_idestado=new_item_estado,
+                contacontabil_idcontacontabil= new_item_cc
             )
 
             new_item_salvo.save()
@@ -88,7 +92,7 @@ def itemmov(request):
                 item_idpatrimonio=item,
                 dataalocacao=dataalocacao,  # Usa a data e hora informada pelo usuário
                 estado=estadoitem,
-                user=usuario  # Registrar o usuário que fez a movimentação
+                user_id=usuario  # Registrar o usuário que fez a movimentação
             )
 
             # Reseta os formulários

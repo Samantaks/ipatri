@@ -121,17 +121,20 @@ def relatorio_gasto(request):
 
 @login_required(login_url='login-page')
 def relatorio_marcas(request):
-    x = Item.objects.all()
-    contador_marcas = Counter(item.marca for item in x)
-    soma_valorcompra_por_marca = {}
-    for marca, count in contador_marcas.items():
-        soma_valorcompra_por_marca[marca] = x.filter(marca=marca).aggregate(Sum('valorcompra'))['valorcompra__sum']
-    labels = list(soma_valorcompra_por_marca.keys())
-    data = list(soma_valorcompra_por_marca.values())
-    z = list(zip(labels, data))
-    z.sort(key=lambda item: item[1], reverse=True)
-    z = list(zip(*z))
-    data_jsn = {'labels': z[0][:3], 'data': z[1][:3]}
+    # Recupera a soma do valor de compra para cada marca em uma única consulta
+    marcas_valores = (Item.objects
+                      .values('marca')
+                      .annotate(total_valorcompra=Sum('valorcompra'))
+                      .order_by('-total_valorcompra'))
+
+    # Separa as marcas e os valores somados em listas
+    labels = [item['marca'] for item in marcas_valores]
+    data = [item['total_valorcompra'] for item in marcas_valores]
+
+    # Cria o JSON com todas as marcas e os valores
+    data_jsn = {'labels': labels, 'data': data}
+
+    # Retorna o JSON
     return JsonResponse(data_jsn)
 
 
@@ -146,9 +149,13 @@ def relatorio_setor(request):
     labels = [str(setor) for setor in soma_valorcompra_por_setor.keys()]
     data = list(soma_valorcompra_por_setor.values())
     z = list(zip(labels, data))
+
     z.sort(key=lambda item: item[1], reverse=True)
     z = list(zip(*z))
-    return JsonResponse({'labels': z[0][:2], 'data': z[1][:2]})
+    return JsonResponse({'labels': z[0], 'data': z[1]})
+
+
+
 
 # Fim das views da Dashboard e itens da dashboard
 

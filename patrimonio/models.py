@@ -5,7 +5,7 @@ from usuario.models import Setor, Usuario
 class Alocacao(models.Model):
     idalocacao = models.AutoField(primary_key=True)
     dataalocacao = models.DateTimeField(blank=True, null=True)
-    estado = models.CharField(max_length=50, blank=True, null=True)
+    estado_idestado = models.ForeignKey('Estado', models.DO_NOTHING, db_column='estado_idestado')
     item_idpatrimonio = models.ForeignKey('Item', models.DO_NOTHING, db_column='item_idpatrimonio',
                                           verbose_name='usuario', related_name='Alocacao')
     user = models.ForeignKey(Usuario, models.DO_NOTHING)
@@ -49,6 +49,9 @@ class Estado(models.Model):
     tipoestado = models.CharField(max_length=45)
     descricaoestado = models.CharField(max_length=200, blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.tipoestado}'
+
     class Meta:
         managed = False
         db_table = 'estado'
@@ -61,7 +64,7 @@ class Item(models.Model):
     descricao = models.TextField(blank=True, null=True)
     tombo = models.IntegerField(blank=True, null=True)
     marca = models.CharField(max_length=50, blank=True, null=True)
-    itemano = models.TextField(blank=True, null=True)  # This field type is a guess.
+    itemano = models.IntegerField(blank=True, null=True)
     datacompra = models.DateField(blank=True, null=True)
     valorcompra = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
     notafiscal = models.IntegerField(blank=True, null=True)
