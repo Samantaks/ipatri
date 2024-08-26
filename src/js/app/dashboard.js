@@ -8,8 +8,8 @@ function gera_cor(qtd=1){
         let r = Math.random() * 255;
         let g = Math.random() * 255;
         let b = Math.random() * 255;
-        bg_color.push(`rgba(${r}, ${g}, ${b}, ${0.2})`)
-        border_color.push(`rgba(${r}, ${g}, ${b}, ${1})`)
+        bg_color.push(`rgba(${r}, ${g}, ${b}, ${0.5})`)
+        border_color.push(`rgba(${r}, ${g}, ${b}, ${2})`)
     }
 
     return [bg_color, border_color];

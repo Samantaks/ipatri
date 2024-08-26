@@ -161,8 +161,8 @@ def relatorio_gasto_por_conta_contabil(request):
     data_final = now()
     data_inicial = data_final - timedelta(days=365)
 
-    # Lista de meses fixos no formato abreviado em português
-    meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+    # Lista de meses fixos no formato abreviado em português, iniciando em setembro
+    meses = ['set', 'out', 'nov', 'dez', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago']
 
     # Obter os anos envolvidos no intervalo
     ano_atual = data_final.year
@@ -189,14 +189,23 @@ def relatorio_gasto_por_conta_contabil(request):
         ano = item['datacompra__year']
         mes = item['datacompra__month']
 
-        # Calcular a posição do mês dentro do intervalo de 12 meses
-        if ano == ano_atual:
-            posicao = mes - 1  # 'mes' já está no range 1-12, então subtrair 1 para índice 0-11
-        else:
-            posicao = mes - 1  # Mesmo tratamento para o ano anterior
+        # Calcular a posição do mês dentro do intervalo de 12 meses, começando em setembro
+        posicao = (mes + 3) % 12  # Mapeia o mês 9 (setembro) para a posição 0 e assim por diante
 
         total = item['total_gasto']
-        dados_mensais[conta_id][posicao] = total
+        dados_mensais[conta_id][posicao] += total
+
+    # Preparar dados para o dataset "Gasto Geral"
+    datacompra_geral = [0] * 12
+    for i in range(12):
+        mes = (data_final.month - i - 1) % 12 + 1
+        ano = data_final.year - (1 if mes > data_final.month else 0)
+        y = sum([
+            i['total_gasto'] for i in items
+            if i['datacompra__month'] == mes and i['datacompra__year'] == ano
+        ])
+        posicao = (mes + 3) % 12  # Mesma lógica de mapeamento para garantir alinhamento
+        datacompra_geral[posicao] = y
 
     # Criar um dicionário para JSON no formato esperado pelo Chart.js
     data = {
@@ -209,6 +218,12 @@ def relatorio_gasto_por_conta_contabil(request):
             for conta_id, gastos in dados_mensais.items()
         ]
     }
+
+    # Adicionar o dataset "Gasto Geral"
+    data['datasets'].append({
+        'label': 'GASTOS SEPLAN',
+        'data': datacompra_geral,  # Alinhado para começar em setembro
+    })
 
     return JsonResponse(data)
 
