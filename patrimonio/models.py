@@ -57,7 +57,6 @@ class Estado(models.Model):
         db_table = 'estado'
 
 
-# Create your models here.
 class Item(models.Model):
     idpatrimonio = models.AutoField(primary_key=True)
     itemnome = models.CharField(max_length=250, blank=True, null=True)

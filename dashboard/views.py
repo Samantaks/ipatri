@@ -161,8 +161,8 @@ def relatorio_gasto_por_conta_contabil(request):
     data_final = now()
     data_inicial = data_final - timedelta(days=365)
 
-    # Lista de meses começando do mês atual retrocedendo um ano
-    meses = [(data_inicial + timedelta(days=30 * i)).strftime('%b').lower() for i in range(12)]
+    # Lista de meses fixos no formato abreviado em português
+    meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
 
     # Obter os anos envolvidos no intervalo
     ano_atual = data_final.year
@@ -191,9 +191,9 @@ def relatorio_gasto_por_conta_contabil(request):
 
         # Calcular a posição do mês dentro do intervalo de 12 meses
         if ano == ano_atual:
-            posicao = mes - (12 - len(meses) % 12)
+            posicao = mes - 1  # 'mes' já está no range 1-12, então subtrair 1 para índice 0-11
         else:
-            posicao = mes + (len(meses) - (12 - len(meses) % 12))
+            posicao = mes - 1  # Mesmo tratamento para o ano anterior
 
         total = item['total_gasto']
         dados_mensais[conta_id][posicao] = total
