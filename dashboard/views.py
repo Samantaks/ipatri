@@ -2,9 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from patrimonio.models import Item
+from patrimonio.models import Item, Contacontabil
 from usuario.models import Usuario, Setor
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils.timezone import now
 from django.http import JsonResponse
 from django.db.models import Sum
 from collections import Counter
@@ -155,6 +156,61 @@ def relatorio_setor(request):
     return JsonResponse({'labels': z[0], 'data': z[1]})
 
 
+def relatorio_gasto_por_conta_contabil(request):
+    # Definir a data inicial e final do intervalo de 12 meses
+    data_final = now()
+    data_inicial = data_final - timedelta(days=365)
+
+    # Lista de meses começando do mês atual retrocedendo um ano
+    meses = [(data_inicial + timedelta(days=30 * i)).strftime('%b').lower() for i in range(12)]
+
+    # Obter os anos envolvidos no intervalo
+    ano_atual = data_final.year
+    ano_anterior = data_inicial.year
+
+    # Dicionário para armazenar os dados
+    dados_mensais = {}
+    contas_contabeis = Contacontabil.objects.all()
+
+    # Inicializar dicionário para armazenar os dados
+    for conta in contas_contabeis:
+        dados_mensais[conta.idcontacontabil] = [0] * 12  # Lista com 12 zeros para 12 meses
+
+    # Agregar dados de gastos por mês e conta contábil
+    items = Item.objects.filter(datacompra__range=[data_inicial, data_final]).values(
+        'contacontabil_idcontacontabil', 'datacompra__year', 'datacompra__month'
+    ).annotate(
+        total_gasto=Sum('valorcompra')
+    ).order_by('contacontabil_idcontacontabil', 'datacompra__year', 'datacompra__month')
+
+    # Preencher dados agregados
+    for item in items:
+        conta_id = item['contacontabil_idcontacontabil']
+        ano = item['datacompra__year']
+        mes = item['datacompra__month']
+
+        # Calcular a posição do mês dentro do intervalo de 12 meses
+        if ano == ano_atual:
+            posicao = mes - (12 - len(meses) % 12)
+        else:
+            posicao = mes + (len(meses) - (12 - len(meses) % 12))
+
+        total = item['total_gasto']
+        dados_mensais[conta_id][posicao] = total
+
+    # Criar um dicionário para JSON no formato esperado pelo Chart.js
+    data = {
+        'labels': meses,
+        'datasets': [
+            {
+                'label': str(Contacontabil.objects.get(pk=conta_id)),
+                'data': gastos,
+            }
+            for conta_id, gastos in dados_mensais.items()
+        ]
+    }
+
+    return JsonResponse(data)
 
 
 # Fim das views da Dashboard e itens da dashboard

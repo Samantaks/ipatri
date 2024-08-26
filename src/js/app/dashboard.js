@@ -16,54 +16,38 @@ function gera_cor(qtd=1){
 
 }
 
-
-// Função para gerar gráficos de barras em Chart.js
-async function gerarRelatorio(url, ctxId, labelGrafico, qtdCores) {
+async function gerarGrafico(url, elementoCanvasId, tipoGrafico, labelGrafico, qtdCores) {
     try {
-        const data = await fetchDados(url);
-        const ctx = document.getElementById(ctxId).getContext('2d');
-        const cores = gera_cor(quantidade=qtdCores);
+        const response = await fetch(url);
+        const data = await response.json();
 
-        criarGraficoBarra(ctx, data, labelGrafico, cores);
-    } catch (error) {
-        console.error(`Erro ao gerar o relatório: ${error}`);
-    }
-}
+        const ctx = document.getElementById(elementoCanvasId).getContext('2d');
+        const cores = gera_cor(qtdCores);
 
-
-// Função para buscar os dados do humilde Djanguinho
-async function fetchDados(url) {
-    const response = await fetch(url, { method: 'GET' });
-    if (!response.ok) {
-        throw new Error(`Erro ao buscar dados: ${response.statusText}`);
-    }
-    return response.json();
-}
-
-// Geral pra Gráfico de barras
-function criarGraficoBarra(ctx, data, labelGrafico, cores) {
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: labelGrafico,
-                data: data.data,
-                backgroundColor: cores[0],
-                borderColor: cores[1],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        new Chart(ctx, {
+            type: tipoGrafico,
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: labelGrafico,
+                    data: data.data,
+                    backgroundColor: cores[0],
+                    borderColor: cores[1],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.error(`Erro ao gerar o gráfico ${labelGrafico}:`, error);
+    }
 }
-
 
 
 
@@ -103,7 +87,7 @@ async function relatorio_gasto(url) {
         const coresFaturamentoMensal = gera_cor(12);
 
         new Chart(ctx, {
-            type: 'radar',
+            type: 'line',
             data: {
                 labels: data.labels,
                 datasets: [{
@@ -127,20 +111,52 @@ async function relatorio_gasto(url) {
     }
 }
 
-
 // Parte 3
 
-
-// Chamando função de relatório para Marcas
 function relatorio_marcas(url) {
-    gerarRelatorio(url, 'gastos_marca', 'Gastos geral da Marca', qtdCores=5);
+    gerarGrafico(url, 'gastos_marca', 'bar', 'Gastos geral da Marca', 5);
 }
 
-// Chamando função de relatório para Setores
 function relatorio_setores(url) {
-    gerarRelatorio(url, 'gastos_setor', 'Gastos geral do Setor', qtdCores=3);
+    gerarGrafico(url, 'gastos_setor', 'bar', 'Gastos geral do Setor', 3);
 }
-
 
 
 // Parte 4
+
+
+
+async function relatorio_gasto_por_conta_contabil(url) {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const ctx = document.getElementById('gastos_contacontabil').getContext('2d');
+        const coresFaturamentoMensal = gera_cor(data.datasets.length); // Gerar cores suficientes para cada dataset
+
+        const datasets = data.datasets.map((dataset, index) => ({
+            label: dataset.label,  // Nome da conta contábil
+            data: dataset.data,  // Dados dos gastos para essa conta
+            backgroundColor: coresFaturamentoMensal[index],
+            borderColor: coresFaturamentoMensal[index],
+            borderWidth: 1
+        }));
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.labels,  // Meses no eixo x
+                datasets: datasets  // Todos os datasets gerados
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Erro ao gerar o gráfico de gastos mensais:", error);
+    }
+}

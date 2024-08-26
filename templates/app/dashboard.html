@@ -44,6 +44,14 @@
             <canvas id="gastos_marca" width="200" height="200"></canvas>
         </div>
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <h4>Gastos Mensais por Tipo:</h4>
+            <canvas id="gastos_contacontabil" width="500" height="200"></canvas>
+        </div>
+    </div>
 
     <footer class="container"></footer>
 
@@ -56,6 +64,7 @@
             relatorio_gasto('{% url "app-relatorio-gasto" %}')
             relatorio_marcas('{% url "app-relatorio-marcas" %}')
             relatorio_setores('{% url "app-relatorio-setor" %}')
+            relatorio_gasto_por_conta_contabil('{% url "app-relatorio-gasto_por_conta_contabil" %}')
         }
     </script>
 </div>    
