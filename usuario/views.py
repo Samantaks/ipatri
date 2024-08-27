@@ -9,9 +9,11 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import Usuario
 from django.contrib import messages
 from django.contrib.messages import constants
+from rolepermissions.roles import assign_role
 
 
 # Mudar o setor de um usuário
+@login_required(login_url='login-page')
 def usuario_setor(request):
     search_form = UsuarioSearchForm()
     edit_form = None
@@ -125,6 +127,7 @@ def cadastropage(request):
         user = User.objects.create_user(username=username, email=email,
                                         password=senha, first_name=nome, last_name=sobrenome)
         user.save()
+        assign_role(user,'servidor')
 
         new_nome = request.POST.get('fname')
         new_sobrenome = request.POST.get('lname')

@@ -1,4 +1,5 @@
 {% load static %}
+{% load permission_tags %}
 <div id="sidebar" class="col-md-3 col-sm-12">
         <div class="logo">
           <img src="{% static "img/main/logo_ipatri.png" %}" alt="Logo da Empresa">
@@ -6,12 +7,14 @@
         <button class="dropdown-toggle btn btn-outline-secondary border-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           Operações
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="{% url 'item-cadastro' %}">Cadastro</a></li>
-            <li><a class="dropdown-item" href="{% url 'visita-setor' %}">Vistoria</a></li>
-            <li><a class="dropdown-item" href="{% url 'movimentacao' %}">Movimentação</a></li>
-            <li><a class="dropdown-item" href="{% url 'user-setor-change' %}">Servidores</a></li>
-        </ul>
+        {% if user|has_role:'patrimonio' %}    
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{% url 'item-cadastro' %}">Cadastro</a></li>
+                <li><a class="dropdown-item" href="{% url 'visita-setor' %}">Vistoria</a></li>
+                <li><a class="dropdown-item" href="{% url 'movimentacao' %}">Movimentação</a></li>
+                <li><a class="dropdown-item" href="{% url 'user-setor-change' %}">Servidores</a></li>
+            </ul>
+        {% endif %}
         <div class="mlfooter">
             <div class="foto-usuario">
                 <img src="{% static "img/main/usuariofrog.jpg" %}" alt="Foto do Usuário">

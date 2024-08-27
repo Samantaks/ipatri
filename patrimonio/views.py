@@ -91,8 +91,8 @@ def itemmov(request):
             Alocacao.objects.create(
                 item_idpatrimonio=item,
                 dataalocacao=dataalocacao,  # Usa a data e hora informada pelo usuário
-                estado=estadoitem,
-                user_id=usuario  # Registrar o usuário que fez a movimentação
+                estado_idestado=estadoitem,
+                user_id=usuario.idusuario  # Registrar o ID do usuário que fez a movimentação
             )
 
             # Reseta os formulários
